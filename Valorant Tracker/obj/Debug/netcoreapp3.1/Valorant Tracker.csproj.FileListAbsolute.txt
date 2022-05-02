@@ -1,0 +1,27 @@
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant_Tracker.frmLogin.resources
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant_Tracker.frmMain.resources
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant_Tracker.Properties.Resources.resources
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant Tracker.csproj.GenerateResource.cache
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant Tracker.AssemblyInfoInputs.cache
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant Tracker.AssemblyInfo.cs
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant Tracker.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\bin\Debug\netcoreapp3.1\Valorant Tracker.exe
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\bin\Debug\netcoreapp3.1\Valorant Tracker.deps.json
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\bin\Debug\netcoreapp3.1\Valorant Tracker.runtimeconfig.json
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\bin\Debug\netcoreapp3.1\Valorant Tracker.runtimeconfig.dev.json
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\bin\Debug\netcoreapp3.1\Valorant Tracker.dll
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\bin\Debug\netcoreapp3.1\Valorant Tracker.pdb
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant Tracker.dll
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant Tracker.pdb
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant Tracker.genruntimeconfig.cache
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\bin\Debug\netcoreapp3.1\RestSharp.dll
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant Tracker.csproj.CopyComplete
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\bin\Debug\netcoreapp3.1\ValAPI.Net.dll
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant Tracker.csproj.AssemblyReference.cache
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant Tracker.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\bin\Debug\netcoreapp3.1\MetroSet UI.dll
+C:\Users\Administrator\source\repos\Valorant Tracker\Valorant Tracker\obj\Debug\netcoreapp3.1\Valorant_Tracker.frmMatchDetails.resources
