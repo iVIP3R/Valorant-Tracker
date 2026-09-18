@@ -10,6 +10,11 @@ namespace Valorant_Tracker
 {
     public class Auth
     {
+        static Auth()
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+        }
+
         public string EntitlementToken { get; set; }
         public string AccessToken { get; set; }
         public string Subject { get; set; }
