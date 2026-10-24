@@ -1,9 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Valorant_Tracker
 {
@@ -286,7 +290,7 @@ namespace Valorant_Tracker
             return DateTime;
         }
 
-        public static PlayerAccountDetails GetDetails (Auth au)
+        public static async Task<PlayerAccountDetails> GetDetailsAsync(Auth au)
         {
             if (au == null) throw new ArgumentNullException(nameof(au));
 
@@ -299,24 +303,24 @@ namespace Valorant_Tracker
                 CreatedAt = DateTime.MinValue
             };
 
-            using var client = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(20) };
-            using var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Post, "https://auth.riotgames.com/userinfo")
+            using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(20) };
+            using var request = new HttpRequestMessage(HttpMethod.Post, "https://auth.riotgames.com/userinfo")
             {
-                Content = new System.Net.Http.StringContent("{}", System.Text.Encoding.UTF8, "application/json")
+                Content = new StringContent("{}", Encoding.UTF8, "application/json")
             };
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", au.AccessToken);
-            using var response = client.Send(request);
-            ret.StatusCode = (int)response.StatusCode;
-            var responseContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", au.AccessToken);
 
-            // Riot can return an HTML challenge/login document. It is not player JSON.
-            if (!response.IsSuccessStatusCode || String.IsNullOrWhiteSpace(responseContent) || responseContent.TrimStart()[0] != '{')
+            using var response = await client.SendAsync(request);
+            ret.StatusCode = (int)response.StatusCode;
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode || string.IsNullOrWhiteSpace(responseContent) || responseContent.TrimStart()[0] != '{')
                 return ret;
 
             var obj = JObject.Parse(responseContent);
             ret.ID = obj.Value<string>("sub") ?? ret.ID;
             var country = obj.Value<string>("country");
-            if (!String.IsNullOrWhiteSpace(country))
+            if (!string.IsNullOrWhiteSpace(country))
                 ret.AccountRegion = ConvertPlayerLocaleToCountryName(country.ToUpperInvariant());
             ret.GameName = obj["acct"]?.Value<string>("game_name") ?? ret.GameName;
             ret.TagLine = obj["acct"]?.Value<string>("tag_line") ?? ret.TagLine;
