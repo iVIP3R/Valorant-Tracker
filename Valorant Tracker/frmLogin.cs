@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Web.WebView2.WinForms;
 using Microsoft.Web.WebView2.Core;
+using System.Linq;
 
 namespace Valorant_Tracker
 {
@@ -16,7 +17,7 @@ namespace Valorant_Tracker
         private readonly WebView2 _browser = new WebView2 { Dock = DockStyle.Fill, Visible = false };
         private bool _handlingRedirect;
         private bool _hiddenAttemptActive;
-
+        private bool _unexpectedRedirectReported;
         public event EventHandler<Auth> Authenticated;
 
         public frmLogin()
@@ -53,7 +54,7 @@ namespace Valorant_Tracker
                 return;
             }
 
-            if (RegionStore.TryLoad(out _) && await HasRiotCookiesAsync())
+            if (RegionStore.TryLoad(out _) && await HasPersistentRiotSessionAsync())
             {
                 Debug.WriteLine("[frmLogin] Silent re-auth attempt started (form stays transparent)");
                 StartHiddenNavigation();
@@ -78,13 +79,53 @@ namespace Valorant_Tracker
             }
         }
 
-        private async Task<bool> HasRiotCookiesAsync()
+        /// <summary>
+        /// Returns true only when Riot has set a persistent session cookie. Session
+        /// cookies (no "Stay signed in" on Riot's page) are destroyed by WebView2 on
+        /// process exit and can never survive to the next launch, so attempting silent
+        /// re-auth with them just wastes ~2s before the form appears anyway.
+        /// </summary>
+        private async Task<bool> HasPersistentRiotSessionAsync()
         {
             try
             {
                 var cookies = await _browser.CoreWebView2.CookieManager.GetCookiesAsync("https://auth.riotgames.com");
-                Debug.WriteLine($"[frmLogin] Riot cookie count: {cookies?.Count ?? 0}");
-                return cookies != null && cookies.Count > 0;
+                if (cookies == null || cookies.Count == 0)
+                {
+                    Debug.WriteLine("[frmLogin] No cookies at auth.riotgames.com");
+                    return false;
+                }
+
+                // Riot's session cookie is "ssid". Check specifically for it — unrelated
+                // persistent cookies (analytics, anti-bot) shouldn't count as "signed in".
+                var ssid = cookies.FirstOrDefault(c =>
+                    string.Equals(c.Name, "ssid", StringComparison.OrdinalIgnoreCase));
+
+                if (ssid == null)
+                {
+                    Debug.WriteLine(
+                        "[frmLogin] No ssid cookie. Available: " +
+                        string.Join(", ", cookies.Select(c => c.Name)));
+                    return false;
+                }
+
+                // WebView2 exposes Expires as DateTime. Persistent cookies have a future
+                // expiry (typically 30 days from issuance for Riot's ssid). Session
+                // cookies are reported as DateTime.MinValue, Unix epoch, or "now" —
+                // all of which are in the past. Require at least an hour of remaining
+                // life so we don't spend 2s attempting a silent re-auth that Riot will
+                // reject because the cookie is about to expire anyway.
+                var expiresUtc = ssid.Expires.Kind == DateTimeKind.Local
+                    ? ssid.Expires.ToUniversalTime()
+                    : ssid.Expires;
+
+                Debug.WriteLine(
+                    $"[frmLogin] ssid expires={ssid.Expires:u} (Kind={ssid.Expires.Kind}, " +
+                    $"UTC={expiresUtc:u})");
+
+                var persistent = expiresUtc > DateTime.UtcNow.AddHours(1);
+                Debug.WriteLine($"[frmLogin] persistent for silent re-auth: {persistent}");
+                return persistent;
             }
             catch (Exception ex)
             {
@@ -171,15 +212,13 @@ namespace Valorant_Tracker
             var uri = _browser.Source;
             if (uri == null) return;
 
+            // Success: token fragment in the redirect.
             if (!_handlingRedirect && WebViewAuthHandler.TryParseRedirect(uri, out var accessToken, out var idToken, out var expiresIn))
             {
                 _handlingRedirect = true;
                 _hiddenAttemptActive = false;
                 try
                 {
-                    // Hide atomically before any await. Setting both Opacity and
-                    // Visible covers both entry paths: silent (form already
-                    // transparent) and Continue-click (form currently opaque).
                     _browser.Visible = false;
                     Opacity = 0;
                     Visible = false;
@@ -202,6 +241,28 @@ namespace Valorant_Tracker
                 return;
             }
 
+            // Unexpected: landed on the redirect host but no token fragment.
+            // Typically means Riot switched from the fragment flow to ?code=...
+            // (or another shape we don't understand). Surface it instead of hanging.
+            if (!_handlingRedirect
+                && !_unexpectedRedirectReported
+                && uri.Host.Equals(WebViewAuthHandler.RedirectHost, StringComparison.OrdinalIgnoreCase))
+            {
+                _unexpectedRedirectReported = true;
+                _hiddenAttemptActive = false;
+                Debug.WriteLine($"[frmLogin] Unexpected redirect to RedirectHost without token: {uri}");
+                ShowLoginForm();
+                MessageBox.Show(
+                    "Riot's sign-in returned an unexpected response. The login flow may have changed.\n\n" +
+                    $"URI: {uri}\n\n" +
+                    "If this keeps happening, please report it with the URI above.",
+                    "Sign-in flow changed",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Hidden attempt hit Riot's credential page — reveal the WebView.
             if (_hiddenAttemptActive
                 && !_handlingRedirect
                 && uri.Host.Equals(RiotLoginHost, StringComparison.OrdinalIgnoreCase))
