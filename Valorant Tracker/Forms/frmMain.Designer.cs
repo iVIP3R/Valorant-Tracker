@@ -354,35 +354,35 @@
             cmbAct.ThemeName = "MetroDark";
             cmbAct.SelectedIndexChanged += cmbAct_SelectedIndexChanged;
             // 
-            // lblWinsAndLosses
+            // lblRank
             // 
-            lblWinsAndLosses.AutoSize = true;
-            lblWinsAndLosses.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
-            lblWinsAndLosses.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
-            lblWinsAndLosses.Location = new System.Drawing.Point(109, 110);
-            lblWinsAndLosses.Name = "lblWinsAndLosses";
-            lblWinsAndLosses.Size = new System.Drawing.Size(0, 18);
-            lblWinsAndLosses.TabIndex = 19;
+            lblRank.AutoSize = true;
+            lblRank.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
+            lblRank.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblRank.Location = new System.Drawing.Point(109, 110);
+            lblRank.Name = "lblRank";
+            lblRank.Size = new System.Drawing.Size(0, 18);
+            lblRank.TabIndex = 17;
             // 
             // lblRankedRating
             // 
             lblRankedRating.AutoSize = true;
             lblRankedRating.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
             lblRankedRating.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
-            lblRankedRating.Location = new System.Drawing.Point(109, 85);
+            lblRankedRating.Location = new System.Drawing.Point(109, 135);
             lblRankedRating.Name = "lblRankedRating";
             lblRankedRating.Size = new System.Drawing.Size(0, 18);
             lblRankedRating.TabIndex = 18;
             // 
-            // lblRank
+            // lblWinsAndLosses
             // 
-            lblRank.AutoSize = true;
-            lblRank.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
-            lblRank.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
-            lblRank.Location = new System.Drawing.Point(109, 60);
-            lblRank.Name = "lblRank";
-            lblRank.Size = new System.Drawing.Size(0, 18);
-            lblRank.TabIndex = 17;
+            lblWinsAndLosses.AutoSize = true;
+            lblWinsAndLosses.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
+            lblWinsAndLosses.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblWinsAndLosses.Location = new System.Drawing.Point(109, 160);
+            lblWinsAndLosses.Name = "lblWinsAndLosses";
+            lblWinsAndLosses.Size = new System.Drawing.Size(0, 18);
+            lblWinsAndLosses.TabIndex = 19;
             // 
             // pbRank
             // 
@@ -419,7 +419,7 @@
             // 
             lblTimeRemaining.AutoSize = true;
             lblTimeRemaining.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
-            lblTimeRemaining.Location = new System.Drawing.Point(333, 13);
+            lblTimeRemaining.Location = new System.Drawing.Point(230, 13);
             lblTimeRemaining.Name = "lblTimeRemaining";
             lblTimeRemaining.Size = new System.Drawing.Size(0, 20);
             lblTimeRemaining.TabIndex = 28;

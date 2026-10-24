@@ -275,9 +275,12 @@ namespace Valorant_Tracker.Data
 
         private static string FormatDuration(int seconds)
         {
-            return TimeSpan
-                .FromSeconds(seconds)
-                .ToString(@"dd\:hh\:mm\:ss");
+            var ts = TimeSpan.FromSeconds(seconds);
+
+            if (ts.TotalDays < 1)
+                return ts.ToString(@"hh\:mm\:ss");
+
+            return ts.ToString(@"dd\:hh\:mm\:ss");
         }
     }
 }

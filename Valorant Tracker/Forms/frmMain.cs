@@ -19,6 +19,8 @@ namespace Valorant_Tracker.Forms
         private List<ValorantSeason> _acts;
         private bool _populatingActs;
         private Dictionary<string, MatchDetails> _matchDetailsCache = new Dictionary<string, MatchDetails>();
+        private Timer _storeTimer;
+        private int _storeSecondsRemaining;
 
         private static readonly Dictionary<string, Image> RankImages = new Dictionary<string, Image>(StringComparer.OrdinalIgnoreCase)
         {
@@ -98,7 +100,27 @@ namespace Valorant_Tracker.Forms
                 if (offerCount > 2) lblWeaponName3.Text = store.FormattedSkinsPanelLayout[2, 0] ?? "";
                 if (offerCount > 3) lblWeaponName4.Text = store.FormattedSkinsPanelLayout[3, 0] ?? "";
 
-                lblTimeRemaining.Text = "Offers | " + store.SkinsPanelLayout.FormattedSingleItemOffersRemainingDuration;
+                _storeSecondsRemaining = store.SkinsPanelLayout.SingleItemOffersRemainingDurationInSeconds;
+                UpdateStoreTimeLabel();
+
+                if (_storeTimer == null)
+                {
+                    _storeTimer = new System.Windows.Forms.Timer { Interval = 1000 };
+                    _storeTimer.Tick += (s, ev) =>
+                    {
+                        if (_storeSecondsRemaining > 0)
+                        {
+                            _storeSecondsRemaining--;
+                            UpdateStoreTimeLabel();
+                        }
+                        else
+                        {
+                            _storeTimer.Stop();
+                            lblTimeRemaining.Text = "Offers | Refreshing...";
+                        }
+                    };
+                }
+                _storeTimer.Start();
 
                 _acts = new List<ValorantSeason>(await actsTask);
                 var currentAct = await currentActTask;
@@ -128,6 +150,15 @@ namespace Valorant_Tracker.Forms
             {
                 MessageBox.Show("Unable to load account data. " + ex.Message, "Load failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void UpdateStoreTimeLabel()
+        {
+            var ts = TimeSpan.FromSeconds(_storeSecondsRemaining);
+
+            var resetLocalTime = DateTime.Now.AddSeconds(_storeSecondsRemaining);
+
+            lblTimeRemaining.Text = $"Offers | {ts.Hours:D2}:{ts.Minutes:D2}:{ts.Seconds:D2} (Resets at {resetLocalTime:h:mm tt})";
         }
 
         private static void SetBackground(PictureBox pb, byte[] bytes)
