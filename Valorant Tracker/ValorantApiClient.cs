@@ -78,7 +78,11 @@ namespace Valorant_Tracker
             using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
             var content = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
             if (!response.IsSuccessStatusCode)
-                throw new HttpRequestException($"Riot API returned {(int)response.StatusCode} ({response.ReasonPhrase}).", null, response.StatusCode);
+            {
+                var apiEx = new HttpRequestException($"Riot API returned {(int)response.StatusCode} ({response.ReasonPhrase}). URL: {request.RequestUri}", null, response.StatusCode);
+                Logger.Log(apiEx, "ValorantApiClient");
+                throw apiEx;
+            }
             return JsonConvert.DeserializeObject<T>(content);
         }
 
