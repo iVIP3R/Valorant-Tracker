@@ -33,685 +33,653 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.cbMain = new MetroSet_UI.Controls.MetroSetControlBox();
-            this.tpCompetitive = new System.Windows.Forms.TabPage();
-            this.lblLastNaNMatches = new System.Windows.Forms.Label();
-            this.cmbGamemode = new MetroSet_UI.Controls.MetroSetComboBox();
-            this.dgvHistory = new System.Windows.Forms.DataGridView();
-            this.cmbAct = new MetroSet_UI.Controls.MetroSetComboBox();
-            this.lblWinsAndLosses = new System.Windows.Forms.Label();
-            this.lblRankedRating = new System.Windows.Forms.Label();
-            this.lblRank = new System.Windows.Forms.Label();
-            this.pbRank = new System.Windows.Forms.PictureBox();
-            this.tpPlayerStore = new System.Windows.Forms.TabPage();
-            this.lblTimeRemaining = new System.Windows.Forms.Label();
-            this.lblWeaponPrice4 = new System.Windows.Forms.Label();
-            this.lblWeaponPrice3 = new System.Windows.Forms.Label();
-            this.lblWeaponPrice2 = new System.Windows.Forms.Label();
-            this.lblWeaponPrice1 = new System.Windows.Forms.Label();
-            this.lblWeaponName4 = new System.Windows.Forms.Label();
-            this.lblWeaponName3 = new System.Windows.Forms.Label();
-            this.lblWeaponName2 = new System.Windows.Forms.Label();
-            this.lblWeaponName1 = new System.Windows.Forms.Label();
-            this.pbWeapon1 = new System.Windows.Forms.PictureBox();
-            this.pbWeapon2 = new System.Windows.Forms.PictureBox();
-            this.pbWeapon3 = new System.Windows.Forms.PictureBox();
-            this.pbWeapon4 = new System.Windows.Forms.PictureBox();
-            this.tpAccountInformation = new System.Windows.Forms.TabPage();
-            this.lblCreatedAt = new System.Windows.Forms.Label();
-            this.lblTagline = new System.Windows.Forms.Label();
-            this.lblRadianitePoints = new System.Windows.Forms.Label();
-            this.lblValorantPoints = new System.Windows.Forms.Label();
-            this.lblLevel = new System.Windows.Forms.Label();
-            this.lblRegion = new System.Windows.Forms.Label();
-            this.lblGameName = new System.Windows.Forms.Label();
-            this.tcMain = new MetroSet_UI.Controls.MetroSetTabControl();
-            this.colMatchID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colServer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMatchLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMatchStartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMap = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAgent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colScore = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKDA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKD = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colADR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAvgScore = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFirstBloods = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPlants = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDefuses = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tpCompetitive.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvHistory)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbRank)).BeginInit();
-            this.tpPlayerStore.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWeapon1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWeapon2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWeapon3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWeapon4)).BeginInit();
-            this.tpAccountInformation.SuspendLayout();
-            this.tcMain.SuspendLayout();
-            this.SuspendLayout();
+            cbMain = new MetroSet_UI.Controls.MetroSetControlBox();
+            tpCompetitive = new System.Windows.Forms.TabPage();
+            lblLastNaNMatches = new System.Windows.Forms.Label();
+            cmbGamemode = new MetroSet_UI.Controls.MetroSetComboBox();
+            dgvHistory = new System.Windows.Forms.DataGridView();
+            colMatchID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colServer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colMatchLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colMatchStartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colMap = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colAgent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colScore = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colKDA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colKD = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colHS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colADR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colAvgScore = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colFirstBloods = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colPlants = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colDefuses = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            cmbAct = new MetroSet_UI.Controls.MetroSetComboBox();
+            lblWinsAndLosses = new System.Windows.Forms.Label();
+            lblRankedRating = new System.Windows.Forms.Label();
+            lblRank = new System.Windows.Forms.Label();
+            pbRank = new System.Windows.Forms.PictureBox();
+            tpPlayerStore = new System.Windows.Forms.TabPage();
+            lblTimeRemaining = new System.Windows.Forms.Label();
+            lblWeaponPrice4 = new System.Windows.Forms.Label();
+            lblWeaponPrice3 = new System.Windows.Forms.Label();
+            lblWeaponPrice2 = new System.Windows.Forms.Label();
+            lblWeaponPrice1 = new System.Windows.Forms.Label();
+            lblWeaponName4 = new System.Windows.Forms.Label();
+            lblWeaponName3 = new System.Windows.Forms.Label();
+            lblWeaponName2 = new System.Windows.Forms.Label();
+            lblWeaponName1 = new System.Windows.Forms.Label();
+            pbWeapon1 = new System.Windows.Forms.PictureBox();
+            pbWeapon2 = new System.Windows.Forms.PictureBox();
+            pbWeapon3 = new System.Windows.Forms.PictureBox();
+            pbWeapon4 = new System.Windows.Forms.PictureBox();
+            tpAccountInformation = new System.Windows.Forms.TabPage();
+            lblCreatedAt = new System.Windows.Forms.Label();
+            lblTagline = new System.Windows.Forms.Label();
+            lblRadianitePoints = new System.Windows.Forms.Label();
+            lblValorantPoints = new System.Windows.Forms.Label();
+            lblLevel = new System.Windows.Forms.Label();
+            lblRegion = new System.Windows.Forms.Label();
+            lblGameName = new System.Windows.Forms.Label();
+            tcMain = new MetroSet_UI.Controls.MetroSetTabControl();
+            tpCompetitive.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvHistory).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbRank).BeginInit();
+            tpPlayerStore.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbWeapon1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbWeapon2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbWeapon3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbWeapon4).BeginInit();
+            tpAccountInformation.SuspendLayout();
+            tcMain.SuspendLayout();
+            SuspendLayout();
             // 
             // cbMain
             // 
-            this.cbMain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbMain.CloseHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.cbMain.CloseHoverForeColor = System.Drawing.Color.White;
-            this.cbMain.CloseNormalForeColor = System.Drawing.Color.Gray;
-            this.cbMain.DisabledForeColor = System.Drawing.Color.DimGray;
-            this.cbMain.IsDerivedStyle = true;
-            this.cbMain.Location = new System.Drawing.Point(709, 0);
-            this.cbMain.MaximizeBox = true;
-            this.cbMain.MaximizeHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.cbMain.MaximizeHoverForeColor = System.Drawing.Color.Gray;
-            this.cbMain.MaximizeNormalForeColor = System.Drawing.Color.Gray;
-            this.cbMain.MinimizeBox = true;
-            this.cbMain.MinimizeHoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.cbMain.MinimizeHoverForeColor = System.Drawing.Color.Gray;
-            this.cbMain.MinimizeNormalForeColor = System.Drawing.Color.Gray;
-            this.cbMain.Name = "cbMain";
-            this.cbMain.Size = new System.Drawing.Size(100, 25);
-            this.cbMain.Style = MetroSet_UI.Enums.Style.Light;
-            this.cbMain.StyleManager = null;
-            this.cbMain.TabIndex = 14;
-            this.cbMain.Text = "metroSetControlBox1";
-            this.cbMain.ThemeAuthor = "Narwin";
-            this.cbMain.ThemeName = "MetroLite";
+            cbMain.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            cbMain.CloseHoverBackColor = System.Drawing.Color.FromArgb(183, 40, 40);
+            cbMain.CloseHoverForeColor = System.Drawing.Color.White;
+            cbMain.CloseNormalForeColor = System.Drawing.Color.Gray;
+            cbMain.DisabledForeColor = System.Drawing.Color.DimGray;
+            cbMain.IsDerivedStyle = true;
+            cbMain.Location = new System.Drawing.Point(709, 0);
+            cbMain.MaximizeBox = true;
+            cbMain.MaximizeHoverBackColor = System.Drawing.Color.FromArgb(238, 238, 238);
+            cbMain.MaximizeHoverForeColor = System.Drawing.Color.Gray;
+            cbMain.MaximizeNormalForeColor = System.Drawing.Color.Gray;
+            cbMain.MinimizeBox = true;
+            cbMain.MinimizeHoverBackColor = System.Drawing.Color.FromArgb(238, 238, 238);
+            cbMain.MinimizeHoverForeColor = System.Drawing.Color.Gray;
+            cbMain.MinimizeNormalForeColor = System.Drawing.Color.Gray;
+            cbMain.Name = "cbMain";
+            cbMain.Size = new System.Drawing.Size(100, 25);
+            cbMain.Style = MetroSet_UI.Enums.Style.Light;
+            cbMain.StyleManager = null;
+            cbMain.TabIndex = 14;
+            cbMain.Text = "metroSetControlBox1";
+            cbMain.ThemeAuthor = "Narwin";
+            cbMain.ThemeName = "MetroLite";
             // 
             // tpCompetitive
             // 
-            this.tpCompetitive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.tpCompetitive.Controls.Add(this.lblLastNaNMatches);
-            this.tpCompetitive.Controls.Add(this.cmbGamemode);
-            this.tpCompetitive.Controls.Add(this.dgvHistory);
-            this.tpCompetitive.Controls.Add(this.cmbAct);
-            this.tpCompetitive.Controls.Add(this.lblWinsAndLosses);
-            this.tpCompetitive.Controls.Add(this.lblRankedRating);
-            this.tpCompetitive.Controls.Add(this.lblRank);
-            this.tpCompetitive.Controls.Add(this.pbRank);
-            this.tpCompetitive.Location = new System.Drawing.Point(4, 42);
-            this.tpCompetitive.Name = "tpCompetitive";
-            this.tpCompetitive.Size = new System.Drawing.Size(771, 314);
-            this.tpCompetitive.TabIndex = 1;
-            this.tpCompetitive.Text = "Competitive";
+            tpCompetitive.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            tpCompetitive.Controls.Add(lblLastNaNMatches);
+            tpCompetitive.Controls.Add(cmbGamemode);
+            tpCompetitive.Controls.Add(dgvHistory);
+            tpCompetitive.Controls.Add(cmbAct);
+            tpCompetitive.Controls.Add(lblWinsAndLosses);
+            tpCompetitive.Controls.Add(lblRankedRating);
+            tpCompetitive.Controls.Add(lblRank);
+            tpCompetitive.Controls.Add(pbRank);
+            tpCompetitive.Location = new System.Drawing.Point(4, 42);
+            tpCompetitive.Name = "tpCompetitive";
+            tpCompetitive.Size = new System.Drawing.Size(771, 314);
+            tpCompetitive.TabIndex = 1;
+            tpCompetitive.Text = "Competitive";
             // 
             // lblLastNaNMatches
             // 
-            this.lblLastNaNMatches.AutoSize = true;
-            this.lblLastNaNMatches.Font = new System.Drawing.Font("Nunito", 10.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblLastNaNMatches.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblLastNaNMatches.Location = new System.Drawing.Point(266, 10);
-            this.lblLastNaNMatches.Name = "lblLastNaNMatches";
-            this.lblLastNaNMatches.Size = new System.Drawing.Size(0, 20);
-            this.lblLastNaNMatches.TabIndex = 22;
+            lblLastNaNMatches.AutoSize = true;
+            lblLastNaNMatches.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
+            lblLastNaNMatches.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblLastNaNMatches.Location = new System.Drawing.Point(266, 10);
+            lblLastNaNMatches.Name = "lblLastNaNMatches";
+            lblLastNaNMatches.Size = new System.Drawing.Size(0, 18);
+            lblLastNaNMatches.TabIndex = 22;
             // 
             // cmbGamemode
             // 
-            this.cmbGamemode.AllowDrop = true;
-            this.cmbGamemode.ArrowColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this.cmbGamemode.BackColor = System.Drawing.Color.Transparent;
-            this.cmbGamemode.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.cmbGamemode.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this.cmbGamemode.CausesValidation = false;
-            this.cmbGamemode.DisabledBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.cmbGamemode.DisabledBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.cmbGamemode.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.cmbGamemode.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cmbGamemode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbGamemode.Font = new System.Drawing.Font("Nunito", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.cmbGamemode.FormattingEnabled = true;
-            this.cmbGamemode.IsDerivedStyle = true;
-            this.cmbGamemode.ItemHeight = 20;
-            this.cmbGamemode.Items.AddRange(new object[] {
-            "Unrated",
-            "Competitive",
-            "Spike rush",
-            "Deathmatch",
-            "Replication",
-            "Snowball fight",
-            "Custom"});
-            this.cmbGamemode.Location = new System.Drawing.Point(109, 17);
-            this.cmbGamemode.Name = "cmbGamemode";
-            this.cmbGamemode.SelectedItemBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(177)))), ((int)(((byte)(225)))));
-            this.cmbGamemode.SelectedItemForeColor = System.Drawing.Color.White;
-            this.cmbGamemode.Size = new System.Drawing.Size(100, 26);
-            this.cmbGamemode.Style = MetroSet_UI.Enums.Style.Dark;
-            this.cmbGamemode.StyleManager = null;
-            this.cmbGamemode.TabIndex = 21;
-            this.cmbGamemode.ThemeAuthor = "Narwin";
-            this.cmbGamemode.ThemeName = "MetroDark";
-            this.cmbGamemode.SelectedIndexChanged += new System.EventHandler(this.cmbGamemode_SelectedIndexChanged);
+            cmbGamemode.AllowDrop = true;
+            cmbGamemode.ArrowColor = System.Drawing.Color.FromArgb(110, 110, 110);
+            cmbGamemode.BackColor = System.Drawing.Color.Transparent;
+            cmbGamemode.BackgroundColor = System.Drawing.Color.FromArgb(34, 34, 34);
+            cmbGamemode.BorderColor = System.Drawing.Color.FromArgb(110, 110, 110);
+            cmbGamemode.CausesValidation = false;
+            cmbGamemode.DisabledBackColor = System.Drawing.Color.FromArgb(80, 80, 80);
+            cmbGamemode.DisabledBorderColor = System.Drawing.Color.FromArgb(109, 109, 109);
+            cmbGamemode.DisabledForeColor = System.Drawing.Color.FromArgb(109, 109, 109);
+            cmbGamemode.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            cmbGamemode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cmbGamemode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Bold);
+            cmbGamemode.FormattingEnabled = true;
+            cmbGamemode.IsDerivedStyle = true;
+            cmbGamemode.ItemHeight = 20;
+            cmbGamemode.Items.AddRange(new object[] { "Unrated", "Competitive", "Spike rush", "Deathmatch", "Replication", "Snowball fight", "Custom" });
+            cmbGamemode.Location = new System.Drawing.Point(3, 60);
+            cmbGamemode.Name = "cmbGamemode";
+            cmbGamemode.SelectedItemBackColor = System.Drawing.Color.FromArgb(65, 177, 225);
+            cmbGamemode.SelectedItemForeColor = System.Drawing.Color.White;
+            cmbGamemode.Size = new System.Drawing.Size(100, 26);
+            cmbGamemode.Style = MetroSet_UI.Enums.Style.Dark;
+            cmbGamemode.StyleManager = null;
+            cmbGamemode.TabIndex = 21;
+            cmbGamemode.ThemeAuthor = "Narwin";
+            cmbGamemode.ThemeName = "MetroDark";
+            cmbGamemode.SelectedIndexChanged += cmbGamemode_SelectedIndexChanged;
             // 
             // dgvHistory
             // 
-            this.dgvHistory.AllowUserToAddRows = false;
-            this.dgvHistory.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(47)))), ((int)(((byte)(52)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Nunito", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(241)))));
+            dgvHistory.AllowUserToAddRows = false;
+            dgvHistory.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(44, 47, 52);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(235, 236, 241);
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Gray;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(241)))));
-            this.dgvHistory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvHistory.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(36)))), ((int)(((byte)(41)))));
-            this.dgvHistory.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
-            this.dgvHistory.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(235, 236, 241);
+            dgvHistory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvHistory.BackgroundColor = System.Drawing.Color.FromArgb(33, 36, 41);
+            dgvHistory.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
+            dgvHistory.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(16)))), ((int)(((byte)(18)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Nunito", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(241)))));
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(15, 16, 18);
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(235, 236, 241);
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Gray;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(241)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(235, 236, 241);
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHistory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvHistory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colMatchID,
-            this.colServer,
-            this.colMatchLength,
-            this.colMatchStartTime,
-            this.colMap,
-            this.colAgent,
-            this.colScore,
-            this.colKDA,
-            this.colKD,
-            this.colHS,
-            this.colADR,
-            this.colAvgScore,
-            this.colFirstBloods,
-            this.colPlants,
-            this.colDefuses});
+            dgvHistory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvHistory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { colMatchID, colServer, colMatchLength, colMatchStartTime, colMap, colAgent, colScore, colKDA, colKD, colHS, colADR, colAvgScore, colFirstBloods, colPlants, colDefuses });
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(36)))), ((int)(((byte)(43)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Nunito", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(33, 36, 43);
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Gray;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Gray;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(241)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(235, 236, 241);
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHistory.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvHistory.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvHistory.EnableHeadersVisualStyles = false;
-            this.dgvHistory.Location = new System.Drawing.Point(266, 45);
-            this.dgvHistory.MultiSelect = false;
-            this.dgvHistory.Name = "dgvHistory";
-            this.dgvHistory.ReadOnly = true;
+            dgvHistory.DefaultCellStyle = dataGridViewCellStyle3;
+            dgvHistory.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            dgvHistory.EnableHeadersVisualStyles = false;
+            dgvHistory.Location = new System.Drawing.Point(266, 45);
+            dgvHistory.MultiSelect = false;
+            dgvHistory.Name = "dgvHistory";
+            dgvHistory.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(16)))), ((int)(((byte)(18)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Nunito", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(241)))));
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(15, 16, 18);
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(235, 236, 241);
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Gray;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(241)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(235, 236, 241);
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHistory.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.dgvHistory.RowHeadersVisible = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(36)))), ((int)(((byte)(43)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Nunito", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(241)))));
+            dgvHistory.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dgvHistory.RowHeadersVisible = false;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(33, 36, 43);
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(235, 236, 241);
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.Gray;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(241)))));
-            this.dgvHistory.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvHistory.RowTemplate.Height = 25;
-            this.dgvHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvHistory.Size = new System.Drawing.Size(485, 275);
-            this.dgvHistory.TabIndex = 16;
-            this.dgvHistory.SelectionChanged += new System.EventHandler(this.dgvHistory_SelectionChanged);
-            // 
-            // cmbAct
-            // 
-            this.cmbAct.AllowDrop = true;
-            this.cmbAct.ArrowColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this.cmbAct.BackColor = System.Drawing.Color.Transparent;
-            this.cmbAct.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.cmbAct.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this.cmbAct.CausesValidation = false;
-            this.cmbAct.DisabledBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.cmbAct.DisabledBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.cmbAct.DisabledForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.cmbAct.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cmbAct.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAct.Font = new System.Drawing.Font("Nunito", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.cmbAct.FormattingEnabled = true;
-            this.cmbAct.IsDerivedStyle = true;
-            this.cmbAct.ItemHeight = 20;
-            this.cmbAct.Items.AddRange(new object[] {
-            "Closed beta",
-            "EP1 Act 1",
-            "EP1 Act 2",
-            "EP1 Act 3",
-            "EP2 Act 1",
-            "EP2 Act 2",
-            "EP2 Act 3",
-            "EP3 Act 1",
-            "EP3 Act 2"});
-            this.cmbAct.Location = new System.Drawing.Point(3, 17);
-            this.cmbAct.Name = "cmbAct";
-            this.cmbAct.SelectedItemBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(177)))), ((int)(((byte)(225)))));
-            this.cmbAct.SelectedItemForeColor = System.Drawing.Color.White;
-            this.cmbAct.Size = new System.Drawing.Size(100, 26);
-            this.cmbAct.Style = MetroSet_UI.Enums.Style.Dark;
-            this.cmbAct.StyleManager = null;
-            this.cmbAct.TabIndex = 20;
-            this.cmbAct.ThemeAuthor = "Narwin";
-            this.cmbAct.ThemeName = "MetroDark";
-            this.cmbAct.SelectedIndexChanged += new System.EventHandler(this.cmbAct_SelectedIndexChanged);
-            // 
-            // lblWinsAndLosses
-            // 
-            this.lblWinsAndLosses.AutoSize = true;
-            this.lblWinsAndLosses.Font = new System.Drawing.Font("Nunito", 10.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblWinsAndLosses.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblWinsAndLosses.Location = new System.Drawing.Point(109, 110);
-            this.lblWinsAndLosses.Name = "lblWinsAndLosses";
-            this.lblWinsAndLosses.Size = new System.Drawing.Size(0, 20);
-            this.lblWinsAndLosses.TabIndex = 19;
-            // 
-            // lblRankedRating
-            // 
-            this.lblRankedRating.AutoSize = true;
-            this.lblRankedRating.Font = new System.Drawing.Font("Nunito", 10.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblRankedRating.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblRankedRating.Location = new System.Drawing.Point(109, 85);
-            this.lblRankedRating.Name = "lblRankedRating";
-            this.lblRankedRating.Size = new System.Drawing.Size(0, 20);
-            this.lblRankedRating.TabIndex = 18;
-            // 
-            // lblRank
-            // 
-            this.lblRank.AutoSize = true;
-            this.lblRank.Font = new System.Drawing.Font("Nunito", 10.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblRank.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblRank.Location = new System.Drawing.Point(109, 60);
-            this.lblRank.Name = "lblRank";
-            this.lblRank.Size = new System.Drawing.Size(0, 20);
-            this.lblRank.TabIndex = 17;
-            // 
-            // pbRank
-            // 
-            this.pbRank.Location = new System.Drawing.Point(3, 59);
-            this.pbRank.Name = "pbRank";
-            this.pbRank.Size = new System.Drawing.Size(100, 85);
-            this.pbRank.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbRank.TabIndex = 16;
-            this.pbRank.TabStop = false;
-            // 
-            // tpPlayerStore
-            // 
-            this.tpPlayerStore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.tpPlayerStore.Controls.Add(this.lblTimeRemaining);
-            this.tpPlayerStore.Controls.Add(this.lblWeaponPrice4);
-            this.tpPlayerStore.Controls.Add(this.lblWeaponPrice3);
-            this.tpPlayerStore.Controls.Add(this.lblWeaponPrice2);
-            this.tpPlayerStore.Controls.Add(this.lblWeaponPrice1);
-            this.tpPlayerStore.Controls.Add(this.lblWeaponName4);
-            this.tpPlayerStore.Controls.Add(this.lblWeaponName3);
-            this.tpPlayerStore.Controls.Add(this.lblWeaponName2);
-            this.tpPlayerStore.Controls.Add(this.lblWeaponName1);
-            this.tpPlayerStore.Controls.Add(this.pbWeapon1);
-            this.tpPlayerStore.Controls.Add(this.pbWeapon2);
-            this.tpPlayerStore.Controls.Add(this.pbWeapon3);
-            this.tpPlayerStore.Controls.Add(this.pbWeapon4);
-            this.tpPlayerStore.Location = new System.Drawing.Point(4, 42);
-            this.tpPlayerStore.Name = "tpPlayerStore";
-            this.tpPlayerStore.Size = new System.Drawing.Size(771, 314);
-            this.tpPlayerStore.TabIndex = 2;
-            this.tpPlayerStore.Text = "Player Store";
-            // 
-            // lblTimeRemaining
-            // 
-            this.lblTimeRemaining.AutoSize = true;
-            this.lblTimeRemaining.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblTimeRemaining.Location = new System.Drawing.Point(333, 13);
-            this.lblTimeRemaining.Name = "lblTimeRemaining";
-            this.lblTimeRemaining.Size = new System.Drawing.Size(0, 22);
-            this.lblTimeRemaining.TabIndex = 28;
-            // 
-            // lblWeaponPrice4
-            // 
-            this.lblWeaponPrice4.AutoSize = true;
-            this.lblWeaponPrice4.Font = new System.Drawing.Font("Nunito", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblWeaponPrice4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblWeaponPrice4.Location = new System.Drawing.Point(616, 236);
-            this.lblWeaponPrice4.Name = "lblWeaponPrice4";
-            this.lblWeaponPrice4.Size = new System.Drawing.Size(0, 17);
-            this.lblWeaponPrice4.TabIndex = 27;
-            // 
-            // lblWeaponPrice3
-            // 
-            this.lblWeaponPrice3.AutoSize = true;
-            this.lblWeaponPrice3.Font = new System.Drawing.Font("Nunito", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblWeaponPrice3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblWeaponPrice3.Location = new System.Drawing.Point(416, 236);
-            this.lblWeaponPrice3.Name = "lblWeaponPrice3";
-            this.lblWeaponPrice3.Size = new System.Drawing.Size(0, 17);
-            this.lblWeaponPrice3.TabIndex = 26;
-            // 
-            // lblWeaponPrice2
-            // 
-            this.lblWeaponPrice2.AutoSize = true;
-            this.lblWeaponPrice2.Font = new System.Drawing.Font("Nunito", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblWeaponPrice2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblWeaponPrice2.Location = new System.Drawing.Point(216, 236);
-            this.lblWeaponPrice2.Name = "lblWeaponPrice2";
-            this.lblWeaponPrice2.Size = new System.Drawing.Size(0, 17);
-            this.lblWeaponPrice2.TabIndex = 25;
-            // 
-            // lblWeaponPrice1
-            // 
-            this.lblWeaponPrice1.AutoSize = true;
-            this.lblWeaponPrice1.Font = new System.Drawing.Font("Nunito", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblWeaponPrice1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblWeaponPrice1.Location = new System.Drawing.Point(12, 236);
-            this.lblWeaponPrice1.Name = "lblWeaponPrice1";
-            this.lblWeaponPrice1.Size = new System.Drawing.Size(0, 17);
-            this.lblWeaponPrice1.TabIndex = 24;
-            // 
-            // lblWeaponName4
-            // 
-            this.lblWeaponName4.AutoSize = true;
-            this.lblWeaponName4.Font = new System.Drawing.Font("Nunito", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblWeaponName4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblWeaponName4.Location = new System.Drawing.Point(616, 207);
-            this.lblWeaponName4.Name = "lblWeaponName4";
-            this.lblWeaponName4.Size = new System.Drawing.Size(0, 17);
-            this.lblWeaponName4.TabIndex = 23;
-            // 
-            // lblWeaponName3
-            // 
-            this.lblWeaponName3.AutoSize = true;
-            this.lblWeaponName3.Font = new System.Drawing.Font("Nunito", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblWeaponName3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblWeaponName3.Location = new System.Drawing.Point(416, 207);
-            this.lblWeaponName3.Name = "lblWeaponName3";
-            this.lblWeaponName3.Size = new System.Drawing.Size(0, 17);
-            this.lblWeaponName3.TabIndex = 22;
-            // 
-            // lblWeaponName2
-            // 
-            this.lblWeaponName2.AutoSize = true;
-            this.lblWeaponName2.Font = new System.Drawing.Font("Nunito", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblWeaponName2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblWeaponName2.Location = new System.Drawing.Point(216, 207);
-            this.lblWeaponName2.Name = "lblWeaponName2";
-            this.lblWeaponName2.Size = new System.Drawing.Size(0, 17);
-            this.lblWeaponName2.TabIndex = 21;
-            // 
-            // lblWeaponName1
-            // 
-            this.lblWeaponName1.AutoSize = true;
-            this.lblWeaponName1.Font = new System.Drawing.Font("Nunito", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblWeaponName1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblWeaponName1.Location = new System.Drawing.Point(12, 207);
-            this.lblWeaponName1.Name = "lblWeaponName1";
-            this.lblWeaponName1.Size = new System.Drawing.Size(0, 17);
-            this.lblWeaponName1.TabIndex = 20;
-            // 
-            // pbWeapon1
-            // 
-            this.pbWeapon1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pbWeapon1.Location = new System.Drawing.Point(12, 20);
-            this.pbWeapon1.Name = "pbWeapon1";
-            this.pbWeapon1.Size = new System.Drawing.Size(175, 175);
-            this.pbWeapon1.TabIndex = 16;
-            this.pbWeapon1.TabStop = false;
-            // 
-            // pbWeapon2
-            // 
-            this.pbWeapon2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pbWeapon2.Location = new System.Drawing.Point(216, 20);
-            this.pbWeapon2.Name = "pbWeapon2";
-            this.pbWeapon2.Size = new System.Drawing.Size(175, 175);
-            this.pbWeapon2.TabIndex = 17;
-            this.pbWeapon2.TabStop = false;
-            // 
-            // pbWeapon3
-            // 
-            this.pbWeapon3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pbWeapon3.Location = new System.Drawing.Point(416, 20);
-            this.pbWeapon3.Name = "pbWeapon3";
-            this.pbWeapon3.Size = new System.Drawing.Size(175, 175);
-            this.pbWeapon3.TabIndex = 18;
-            this.pbWeapon3.TabStop = false;
-            // 
-            // pbWeapon4
-            // 
-            this.pbWeapon4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pbWeapon4.Location = new System.Drawing.Point(616, 20);
-            this.pbWeapon4.Name = "pbWeapon4";
-            this.pbWeapon4.Size = new System.Drawing.Size(175, 175);
-            this.pbWeapon4.TabIndex = 19;
-            this.pbWeapon4.TabStop = false;
-            // 
-            // tpAccountInformation
-            // 
-            this.tpAccountInformation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.tpAccountInformation.Controls.Add(this.lblCreatedAt);
-            this.tpAccountInformation.Controls.Add(this.lblTagline);
-            this.tpAccountInformation.Controls.Add(this.lblRadianitePoints);
-            this.tpAccountInformation.Controls.Add(this.lblValorantPoints);
-            this.tpAccountInformation.Controls.Add(this.lblLevel);
-            this.tpAccountInformation.Controls.Add(this.lblRegion);
-            this.tpAccountInformation.Controls.Add(this.lblGameName);
-            this.tpAccountInformation.Location = new System.Drawing.Point(4, 42);
-            this.tpAccountInformation.Name = "tpAccountInformation";
-            this.tpAccountInformation.Size = new System.Drawing.Size(771, 314);
-            this.tpAccountInformation.TabIndex = 0;
-            this.tpAccountInformation.Text = "Account Information";
-            // 
-            // lblCreatedAt
-            // 
-            this.lblCreatedAt.Font = new System.Drawing.Font("Nunito", 10.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblCreatedAt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblCreatedAt.Location = new System.Drawing.Point(12, 264);
-            this.lblCreatedAt.Name = "lblCreatedAt";
-            this.lblCreatedAt.Size = new System.Drawing.Size(756, 23);
-            this.lblCreatedAt.TabIndex = 22;
-            this.lblCreatedAt.Text = "Created at :";
-            // 
-            // lblTagline
-            // 
-            this.lblTagline.Font = new System.Drawing.Font("Nunito", 10.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblTagline.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblTagline.Location = new System.Drawing.Point(12, 64);
-            this.lblTagline.Name = "lblTagline";
-            this.lblTagline.Size = new System.Drawing.Size(756, 23);
-            this.lblTagline.TabIndex = 21;
-            this.lblTagline.Text = "Tagline :";
-            // 
-            // lblRadianitePoints
-            // 
-            this.lblRadianitePoints.Font = new System.Drawing.Font("Nunito", 10.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblRadianitePoints.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblRadianitePoints.Location = new System.Drawing.Point(12, 224);
-            this.lblRadianitePoints.Name = "lblRadianitePoints";
-            this.lblRadianitePoints.Size = new System.Drawing.Size(756, 23);
-            this.lblRadianitePoints.TabIndex = 20;
-            this.lblRadianitePoints.Text = "Radianite points :";
-            // 
-            // lblValorantPoints
-            // 
-            this.lblValorantPoints.Font = new System.Drawing.Font("Nunito", 10.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblValorantPoints.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblValorantPoints.Location = new System.Drawing.Point(12, 184);
-            this.lblValorantPoints.Name = "lblValorantPoints";
-            this.lblValorantPoints.Size = new System.Drawing.Size(756, 23);
-            this.lblValorantPoints.TabIndex = 19;
-            this.lblValorantPoints.Text = "Valorant points :";
-            // 
-            // lblLevel
-            // 
-            this.lblLevel.Font = new System.Drawing.Font("Nunito", 10.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblLevel.Location = new System.Drawing.Point(12, 144);
-            this.lblLevel.Name = "lblLevel";
-            this.lblLevel.Size = new System.Drawing.Size(756, 23);
-            this.lblLevel.TabIndex = 18;
-            this.lblLevel.Text = "Level :";
-            // 
-            // lblRegion
-            // 
-            this.lblRegion.Font = new System.Drawing.Font("Nunito", 10.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblRegion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblRegion.Location = new System.Drawing.Point(12, 104);
-            this.lblRegion.Name = "lblRegion";
-            this.lblRegion.Size = new System.Drawing.Size(756, 23);
-            this.lblRegion.TabIndex = 17;
-            this.lblRegion.Text = "Region :";
-            // 
-            // lblGameName
-            // 
-            this.lblGameName.Font = new System.Drawing.Font("Nunito", 10.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblGameName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lblGameName.Location = new System.Drawing.Point(12, 24);
-            this.lblGameName.Name = "lblGameName";
-            this.lblGameName.Size = new System.Drawing.Size(756, 23);
-            this.lblGameName.TabIndex = 16;
-            this.lblGameName.Text = "Game name :";
-            // 
-            // tcMain
-            // 
-            this.tcMain.AnimateEasingType = MetroSet_UI.Enums.EasingType.CubeOut;
-            this.tcMain.AnimateTime = 200;
-            this.tcMain.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.tcMain.Controls.Add(this.tpCompetitive);
-            this.tcMain.Controls.Add(this.tpAccountInformation);
-            this.tcMain.Controls.Add(this.tpPlayerStore);
-            this.tcMain.IsDerivedStyle = true;
-            this.tcMain.ItemSize = new System.Drawing.Size(100, 38);
-            this.tcMain.Location = new System.Drawing.Point(15, 86);
-            this.tcMain.Name = "tcMain";
-            this.tcMain.SelectedIndex = 0;
-            this.tcMain.SelectedTextColor = System.Drawing.Color.White;
-            this.tcMain.Size = new System.Drawing.Size(779, 360);
-            this.tcMain.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tcMain.Speed = 100;
-            this.tcMain.Style = MetroSet_UI.Enums.Style.Dark;
-            this.tcMain.StyleManager = null;
-            this.tcMain.TabIndex = 15;
-            this.tcMain.ThemeAuthor = "Narwin";
-            this.tcMain.ThemeName = "MetroDark";
-            this.tcMain.UnselectedTextColor = System.Drawing.Color.Gray;
-            this.tcMain.UseAnimation = false;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(235, 236, 241);
+            dgvHistory.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dgvHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            dgvHistory.Size = new System.Drawing.Size(485, 275);
+            dgvHistory.TabIndex = 16;
+            dgvHistory.SelectionChanged += dgvHistory_SelectionChanged;
             // 
             // colMatchID
             // 
-            this.colMatchID.HeaderText = "Match ID";
-            this.colMatchID.Name = "colMatchID";
-            this.colMatchID.ReadOnly = true;
-            this.colMatchID.Visible = false;
+            colMatchID.HeaderText = "Match ID";
+            colMatchID.Name = "colMatchID";
+            colMatchID.ReadOnly = true;
+            colMatchID.Visible = false;
             // 
             // colServer
             // 
-            this.colServer.HeaderText = "Server";
-            this.colServer.Name = "colServer";
-            this.colServer.ReadOnly = true;
+            colServer.HeaderText = "Server";
+            colServer.Name = "colServer";
+            colServer.ReadOnly = true;
             // 
             // colMatchLength
             // 
-            this.colMatchLength.HeaderText = "Match length";
-            this.colMatchLength.Name = "colMatchLength";
-            this.colMatchLength.ReadOnly = true;
+            colMatchLength.HeaderText = "Match length";
+            colMatchLength.Name = "colMatchLength";
+            colMatchLength.ReadOnly = true;
             // 
             // colMatchStartTime
             // 
-            this.colMatchStartTime.HeaderText = "Match start time";
-            this.colMatchStartTime.Name = "colMatchStartTime";
-            this.colMatchStartTime.ReadOnly = true;
+            colMatchStartTime.HeaderText = "Match start time";
+            colMatchStartTime.Name = "colMatchStartTime";
+            colMatchStartTime.ReadOnly = true;
             // 
             // colMap
             // 
-            this.colMap.HeaderText = "Map";
-            this.colMap.Name = "colMap";
-            this.colMap.ReadOnly = true;
+            colMap.HeaderText = "Map";
+            colMap.Name = "colMap";
+            colMap.ReadOnly = true;
             // 
             // colAgent
             // 
-            this.colAgent.HeaderText = "Agent";
-            this.colAgent.Name = "colAgent";
-            this.colAgent.ReadOnly = true;
+            colAgent.HeaderText = "Agent";
+            colAgent.Name = "colAgent";
+            colAgent.ReadOnly = true;
             // 
             // colScore
             // 
-            this.colScore.HeaderText = "Score";
-            this.colScore.Name = "colScore";
-            this.colScore.ReadOnly = true;
+            colScore.HeaderText = "Score";
+            colScore.Name = "colScore";
+            colScore.ReadOnly = true;
             // 
             // colKDA
             // 
-            this.colKDA.HeaderText = "KDA";
-            this.colKDA.Name = "colKDA";
-            this.colKDA.ReadOnly = true;
+            colKDA.HeaderText = "KDA";
+            colKDA.Name = "colKDA";
+            colKDA.ReadOnly = true;
             // 
             // colKD
             // 
-            this.colKD.HeaderText = "KD";
-            this.colKD.Name = "colKD";
-            this.colKD.ReadOnly = true;
+            colKD.HeaderText = "KD";
+            colKD.Name = "colKD";
+            colKD.ReadOnly = true;
             // 
             // colHS
             // 
-            this.colHS.HeaderText = "HS%";
-            this.colHS.Name = "colHS";
-            this.colHS.ReadOnly = true;
+            colHS.HeaderText = "HS%";
+            colHS.Name = "colHS";
+            colHS.ReadOnly = true;
             // 
             // colADR
             // 
-            this.colADR.HeaderText = "ADR";
-            this.colADR.Name = "colADR";
-            this.colADR.ReadOnly = true;
+            colADR.HeaderText = "ADR";
+            colADR.Name = "colADR";
+            colADR.ReadOnly = true;
             // 
             // colAvgScore
             // 
-            this.colAvgScore.HeaderText = "Avg combat score";
-            this.colAvgScore.Name = "colAvgScore";
-            this.colAvgScore.ReadOnly = true;
+            colAvgScore.HeaderText = "Avg combat score";
+            colAvgScore.Name = "colAvgScore";
+            colAvgScore.ReadOnly = true;
             // 
             // colFirstBloods
             // 
-            this.colFirstBloods.HeaderText = "First bloods";
-            this.colFirstBloods.Name = "colFirstBloods";
-            this.colFirstBloods.ReadOnly = true;
+            colFirstBloods.HeaderText = "First bloods";
+            colFirstBloods.Name = "colFirstBloods";
+            colFirstBloods.ReadOnly = true;
             // 
             // colPlants
             // 
-            this.colPlants.HeaderText = "Plants";
-            this.colPlants.Name = "colPlants";
-            this.colPlants.ReadOnly = true;
+            colPlants.HeaderText = "Plants";
+            colPlants.Name = "colPlants";
+            colPlants.ReadOnly = true;
             // 
             // colDefuses
             // 
-            this.colDefuses.HeaderText = "Defuses";
-            this.colDefuses.Name = "colDefuses";
-            this.colDefuses.ReadOnly = true;
+            colDefuses.HeaderText = "Defuses";
+            colDefuses.Name = "colDefuses";
+            colDefuses.ReadOnly = true;
+            // 
+            // cmbAct
+            // 
+            cmbAct.AllowDrop = true;
+            cmbAct.ArrowColor = System.Drawing.Color.FromArgb(110, 110, 110);
+            cmbAct.BackColor = System.Drawing.Color.Transparent;
+            cmbAct.BackgroundColor = System.Drawing.Color.FromArgb(34, 34, 34);
+            cmbAct.BorderColor = System.Drawing.Color.FromArgb(110, 110, 110);
+            cmbAct.CausesValidation = false;
+            cmbAct.DisabledBackColor = System.Drawing.Color.FromArgb(80, 80, 80);
+            cmbAct.DisabledBorderColor = System.Drawing.Color.FromArgb(109, 109, 109);
+            cmbAct.DisabledForeColor = System.Drawing.Color.FromArgb(109, 109, 109);
+            cmbAct.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            cmbAct.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cmbAct.DropDownWidth = 180;
+            cmbAct.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Bold);
+            cmbAct.FormattingEnabled = true;
+            cmbAct.IsDerivedStyle = true;
+            cmbAct.ItemHeight = 20;
+            cmbAct.Location = new System.Drawing.Point(3, 17);
+            cmbAct.Name = "cmbAct";
+            cmbAct.SelectedItemBackColor = System.Drawing.Color.FromArgb(65, 177, 225);
+            cmbAct.SelectedItemForeColor = System.Drawing.Color.White;
+            cmbAct.Size = new System.Drawing.Size(180, 26);
+            cmbAct.Style = MetroSet_UI.Enums.Style.Dark;
+            cmbAct.StyleManager = null;
+            cmbAct.TabIndex = 20;
+            cmbAct.ThemeAuthor = "Narwin";
+            cmbAct.ThemeName = "MetroDark";
+            cmbAct.SelectedIndexChanged += cmbAct_SelectedIndexChanged;
+            // 
+            // lblWinsAndLosses
+            // 
+            lblWinsAndLosses.AutoSize = true;
+            lblWinsAndLosses.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
+            lblWinsAndLosses.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblWinsAndLosses.Location = new System.Drawing.Point(109, 110);
+            lblWinsAndLosses.Name = "lblWinsAndLosses";
+            lblWinsAndLosses.Size = new System.Drawing.Size(0, 18);
+            lblWinsAndLosses.TabIndex = 19;
+            // 
+            // lblRankedRating
+            // 
+            lblRankedRating.AutoSize = true;
+            lblRankedRating.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
+            lblRankedRating.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblRankedRating.Location = new System.Drawing.Point(109, 85);
+            lblRankedRating.Name = "lblRankedRating";
+            lblRankedRating.Size = new System.Drawing.Size(0, 18);
+            lblRankedRating.TabIndex = 18;
+            // 
+            // lblRank
+            // 
+            lblRank.AutoSize = true;
+            lblRank.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
+            lblRank.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblRank.Location = new System.Drawing.Point(109, 60);
+            lblRank.Name = "lblRank";
+            lblRank.Size = new System.Drawing.Size(0, 18);
+            lblRank.TabIndex = 17;
+            // 
+            // pbRank
+            // 
+            pbRank.Location = new System.Drawing.Point(3, 110);
+            pbRank.Name = "pbRank";
+            pbRank.Size = new System.Drawing.Size(100, 85);
+            pbRank.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            pbRank.TabIndex = 16;
+            pbRank.TabStop = false;
+            // 
+            // tpPlayerStore
+            // 
+            tpPlayerStore.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            tpPlayerStore.Controls.Add(lblTimeRemaining);
+            tpPlayerStore.Controls.Add(lblWeaponPrice4);
+            tpPlayerStore.Controls.Add(lblWeaponPrice3);
+            tpPlayerStore.Controls.Add(lblWeaponPrice2);
+            tpPlayerStore.Controls.Add(lblWeaponPrice1);
+            tpPlayerStore.Controls.Add(lblWeaponName4);
+            tpPlayerStore.Controls.Add(lblWeaponName3);
+            tpPlayerStore.Controls.Add(lblWeaponName2);
+            tpPlayerStore.Controls.Add(lblWeaponName1);
+            tpPlayerStore.Controls.Add(pbWeapon1);
+            tpPlayerStore.Controls.Add(pbWeapon2);
+            tpPlayerStore.Controls.Add(pbWeapon3);
+            tpPlayerStore.Controls.Add(pbWeapon4);
+            tpPlayerStore.Location = new System.Drawing.Point(4, 42);
+            tpPlayerStore.Name = "tpPlayerStore";
+            tpPlayerStore.Size = new System.Drawing.Size(771, 314);
+            tpPlayerStore.TabIndex = 2;
+            tpPlayerStore.Text = "Player Store";
+            // 
+            // lblTimeRemaining
+            // 
+            lblTimeRemaining.AutoSize = true;
+            lblTimeRemaining.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblTimeRemaining.Location = new System.Drawing.Point(333, 13);
+            lblTimeRemaining.Name = "lblTimeRemaining";
+            lblTimeRemaining.Size = new System.Drawing.Size(0, 20);
+            lblTimeRemaining.TabIndex = 28;
+            // 
+            // lblWeaponPrice4
+            // 
+            lblWeaponPrice4.AutoSize = true;
+            lblWeaponPrice4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            lblWeaponPrice4.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblWeaponPrice4.Location = new System.Drawing.Point(616, 236);
+            lblWeaponPrice4.Name = "lblWeaponPrice4";
+            lblWeaponPrice4.Size = new System.Drawing.Size(0, 15);
+            lblWeaponPrice4.TabIndex = 27;
+            // 
+            // lblWeaponPrice3
+            // 
+            lblWeaponPrice3.AutoSize = true;
+            lblWeaponPrice3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            lblWeaponPrice3.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblWeaponPrice3.Location = new System.Drawing.Point(416, 236);
+            lblWeaponPrice3.Name = "lblWeaponPrice3";
+            lblWeaponPrice3.Size = new System.Drawing.Size(0, 15);
+            lblWeaponPrice3.TabIndex = 26;
+            // 
+            // lblWeaponPrice2
+            // 
+            lblWeaponPrice2.AutoSize = true;
+            lblWeaponPrice2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            lblWeaponPrice2.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblWeaponPrice2.Location = new System.Drawing.Point(216, 236);
+            lblWeaponPrice2.Name = "lblWeaponPrice2";
+            lblWeaponPrice2.Size = new System.Drawing.Size(0, 15);
+            lblWeaponPrice2.TabIndex = 25;
+            // 
+            // lblWeaponPrice1
+            // 
+            lblWeaponPrice1.AutoSize = true;
+            lblWeaponPrice1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            lblWeaponPrice1.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblWeaponPrice1.Location = new System.Drawing.Point(12, 236);
+            lblWeaponPrice1.Name = "lblWeaponPrice1";
+            lblWeaponPrice1.Size = new System.Drawing.Size(0, 15);
+            lblWeaponPrice1.TabIndex = 24;
+            // 
+            // lblWeaponName4
+            // 
+            lblWeaponName4.AutoSize = true;
+            lblWeaponName4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            lblWeaponName4.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblWeaponName4.Location = new System.Drawing.Point(616, 207);
+            lblWeaponName4.Name = "lblWeaponName4";
+            lblWeaponName4.Size = new System.Drawing.Size(0, 15);
+            lblWeaponName4.TabIndex = 23;
+            // 
+            // lblWeaponName3
+            // 
+            lblWeaponName3.AutoSize = true;
+            lblWeaponName3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            lblWeaponName3.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblWeaponName3.Location = new System.Drawing.Point(416, 207);
+            lblWeaponName3.Name = "lblWeaponName3";
+            lblWeaponName3.Size = new System.Drawing.Size(0, 15);
+            lblWeaponName3.TabIndex = 22;
+            // 
+            // lblWeaponName2
+            // 
+            lblWeaponName2.AutoSize = true;
+            lblWeaponName2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            lblWeaponName2.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblWeaponName2.Location = new System.Drawing.Point(216, 207);
+            lblWeaponName2.Name = "lblWeaponName2";
+            lblWeaponName2.Size = new System.Drawing.Size(0, 15);
+            lblWeaponName2.TabIndex = 21;
+            // 
+            // lblWeaponName1
+            // 
+            lblWeaponName1.AutoSize = true;
+            lblWeaponName1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            lblWeaponName1.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblWeaponName1.Location = new System.Drawing.Point(12, 207);
+            lblWeaponName1.Name = "lblWeaponName1";
+            lblWeaponName1.Size = new System.Drawing.Size(0, 15);
+            lblWeaponName1.TabIndex = 20;
+            // 
+            // pbWeapon1
+            // 
+            pbWeapon1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            pbWeapon1.Location = new System.Drawing.Point(12, 20);
+            pbWeapon1.Name = "pbWeapon1";
+            pbWeapon1.Size = new System.Drawing.Size(175, 175);
+            pbWeapon1.TabIndex = 16;
+            pbWeapon1.TabStop = false;
+            // 
+            // pbWeapon2
+            // 
+            pbWeapon2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            pbWeapon2.Location = new System.Drawing.Point(216, 20);
+            pbWeapon2.Name = "pbWeapon2";
+            pbWeapon2.Size = new System.Drawing.Size(175, 175);
+            pbWeapon2.TabIndex = 17;
+            pbWeapon2.TabStop = false;
+            // 
+            // pbWeapon3
+            // 
+            pbWeapon3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            pbWeapon3.Location = new System.Drawing.Point(416, 20);
+            pbWeapon3.Name = "pbWeapon3";
+            pbWeapon3.Size = new System.Drawing.Size(175, 175);
+            pbWeapon3.TabIndex = 18;
+            pbWeapon3.TabStop = false;
+            // 
+            // pbWeapon4
+            // 
+            pbWeapon4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            pbWeapon4.Location = new System.Drawing.Point(616, 20);
+            pbWeapon4.Name = "pbWeapon4";
+            pbWeapon4.Size = new System.Drawing.Size(175, 175);
+            pbWeapon4.TabIndex = 19;
+            pbWeapon4.TabStop = false;
+            // 
+            // tpAccountInformation
+            // 
+            tpAccountInformation.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            tpAccountInformation.Controls.Add(lblCreatedAt);
+            tpAccountInformation.Controls.Add(lblTagline);
+            tpAccountInformation.Controls.Add(lblRadianitePoints);
+            tpAccountInformation.Controls.Add(lblValorantPoints);
+            tpAccountInformation.Controls.Add(lblLevel);
+            tpAccountInformation.Controls.Add(lblRegion);
+            tpAccountInformation.Controls.Add(lblGameName);
+            tpAccountInformation.Location = new System.Drawing.Point(4, 42);
+            tpAccountInformation.Name = "tpAccountInformation";
+            tpAccountInformation.Size = new System.Drawing.Size(771, 314);
+            tpAccountInformation.TabIndex = 0;
+            tpAccountInformation.Text = "Account Information";
+            // 
+            // lblCreatedAt
+            // 
+            lblCreatedAt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
+            lblCreatedAt.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblCreatedAt.Location = new System.Drawing.Point(12, 264);
+            lblCreatedAt.Name = "lblCreatedAt";
+            lblCreatedAt.Size = new System.Drawing.Size(756, 23);
+            lblCreatedAt.TabIndex = 22;
+            lblCreatedAt.Text = "Created at :";
+            // 
+            // lblTagline
+            // 
+            lblTagline.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
+            lblTagline.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblTagline.Location = new System.Drawing.Point(12, 64);
+            lblTagline.Name = "lblTagline";
+            lblTagline.Size = new System.Drawing.Size(756, 23);
+            lblTagline.TabIndex = 21;
+            lblTagline.Text = "Tagline :";
+            // 
+            // lblRadianitePoints
+            // 
+            lblRadianitePoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
+            lblRadianitePoints.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblRadianitePoints.Location = new System.Drawing.Point(12, 224);
+            lblRadianitePoints.Name = "lblRadianitePoints";
+            lblRadianitePoints.Size = new System.Drawing.Size(756, 23);
+            lblRadianitePoints.TabIndex = 20;
+            lblRadianitePoints.Text = "Radianite points :";
+            // 
+            // lblValorantPoints
+            // 
+            lblValorantPoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
+            lblValorantPoints.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblValorantPoints.Location = new System.Drawing.Point(12, 184);
+            lblValorantPoints.Name = "lblValorantPoints";
+            lblValorantPoints.Size = new System.Drawing.Size(756, 23);
+            lblValorantPoints.TabIndex = 19;
+            lblValorantPoints.Text = "Valorant points :";
+            // 
+            // lblLevel
+            // 
+            lblLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
+            lblLevel.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblLevel.Location = new System.Drawing.Point(12, 144);
+            lblLevel.Name = "lblLevel";
+            lblLevel.Size = new System.Drawing.Size(756, 23);
+            lblLevel.TabIndex = 18;
+            lblLevel.Text = "Level :";
+            // 
+            // lblRegion
+            // 
+            lblRegion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
+            lblRegion.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblRegion.Location = new System.Drawing.Point(12, 104);
+            lblRegion.Name = "lblRegion";
+            lblRegion.Size = new System.Drawing.Size(756, 23);
+            lblRegion.TabIndex = 17;
+            lblRegion.Text = "Region :";
+            // 
+            // lblGameName
+            // 
+            lblGameName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.75F, System.Drawing.FontStyle.Bold);
+            lblGameName.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            lblGameName.Location = new System.Drawing.Point(12, 24);
+            lblGameName.Name = "lblGameName";
+            lblGameName.Size = new System.Drawing.Size(756, 23);
+            lblGameName.TabIndex = 16;
+            lblGameName.Text = "Game name :";
+            // 
+            // tcMain
+            // 
+            tcMain.AnimateEasingType = MetroSet_UI.Enums.EasingType.CubeOut;
+            tcMain.AnimateTime = 200;
+            tcMain.BackgroundColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            tcMain.Controls.Add(tpCompetitive);
+            tcMain.Controls.Add(tpAccountInformation);
+            tcMain.Controls.Add(tpPlayerStore);
+            tcMain.IsDerivedStyle = true;
+            tcMain.ItemSize = new System.Drawing.Size(100, 38);
+            tcMain.Location = new System.Drawing.Point(15, 86);
+            tcMain.Name = "tcMain";
+            tcMain.SelectedIndex = 0;
+            tcMain.SelectedTextColor = System.Drawing.Color.White;
+            tcMain.Size = new System.Drawing.Size(779, 360);
+            tcMain.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            tcMain.Speed = 100;
+            tcMain.Style = MetroSet_UI.Enums.Style.Dark;
+            tcMain.StyleManager = null;
+            tcMain.TabIndex = 15;
+            tcMain.ThemeAuthor = "Narwin";
+            tcMain.ThemeName = "MetroDark";
+            tcMain.UnselectedTextColor = System.Drawing.Color.Gray;
+            tcMain.UseAnimation = false;
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.ClientSize = new System.Drawing.Size(809, 461);
-            this.Controls.Add(this.tcMain);
-            this.Controls.Add(this.cbMain);
-            this.Font = new System.Drawing.Font("Nunito", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.Name = "frmMain";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Style = MetroSet_UI.Enums.Style.Dark;
-            this.Text = "Valorant Tracker";
-            this.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ThemeName = "MetroDark";
-            this.Load += new System.EventHandler(this.frmMain_Load);
-            this.tpCompetitive.ResumeLayout(false);
-            this.tpCompetitive.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvHistory)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbRank)).EndInit();
-            this.tpPlayerStore.ResumeLayout(false);
-            this.tpPlayerStore.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWeapon1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWeapon2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWeapon3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWeapon4)).EndInit();
-            this.tpAccountInformation.ResumeLayout(false);
-            this.tcMain.ResumeLayout(false);
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            BackgroundColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            ClientSize = new System.Drawing.Size(809, 461);
+            Controls.Add(tcMain);
+            Controls.Add(cbMain);
+            Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            Name = "frmMain";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Style = MetroSet_UI.Enums.Style.Dark;
+            Text = "Valorant Tracker";
+            TextColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            ThemeName = "MetroDark";
+            Load += frmMain_Load;
+            tpCompetitive.ResumeLayout(false);
+            tpCompetitive.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvHistory).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbRank).EndInit();
+            tpPlayerStore.ResumeLayout(false);
+            tpPlayerStore.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbWeapon1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbWeapon2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbWeapon3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbWeapon4).EndInit();
+            tpAccountInformation.ResumeLayout(false);
+            tcMain.ResumeLayout(false);
+            ResumeLayout(false);
 
         }
 

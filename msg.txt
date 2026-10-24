@@ -1,0 +1,29 @@
+feat(data): add ValorantDataService for valorant-api.com reference data
+
+Static process-wide cache for seasons, agents, and maps from valorant-api.com.
+Fetches lazily on first access, caches the result, and retries on failure (a
+failed Lazy<Task<T>> would otherwise poison every subsequent call until
+restart). Used later in Phase 2 to replace the hardcoded Seasons/Agent/Map
+tables in Enums.cs, so adding a new act or agent on Riot's side becomes a
+zero-code change: restart the app and the new entry appears.
+
+Data-shape notes discovered during testing:
+
+1. /v1/seasons/competitive returns a completely different shape (competitive
+   seasons with borders and seasonUuid, no type or displayName fields). Not
+   useful for the act picker.
+
+2. /v1/seasons returns the full list with uuid, displayName, type, title,
+   parentUuid, startTime, endTime. Acts are marked type = 'EAresSeasonType::Act'
+   (not just 'act'); episodes and closed beta have type = null.
+
+3. displayName alone is ambiguous ('ACT I' exists for every episode). GetActsAsync
+   resolves a DisplayLabel from title ('V25 // ACT I') when present, or
+   parent.displayName + ' // ' + displayName ('EPISODE 8 // ACT III') otherwise,
+   and exposes it via ToString() so combo boxes bind naturally without needing
+   DisplayMember.
+
+4. isActive is not populated on this endpoint. GetCurrentActAsync derives the
+   current act from StartTime/EndTime instead. Verified: with the current
+   patch data, returns V26 // ACT VI (uuid=d816f426...), matching the newest
+   entry in the sorted list."

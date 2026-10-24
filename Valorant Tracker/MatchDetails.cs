@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
-using RestSharp;
+using System.Text.RegularExpressions;
 
 namespace Valorant_Tracker
 {
@@ -41,6 +41,7 @@ namespace Valorant_Tracker
 
         public class _MatchOverview
         {
+            public string Team;
             public string IDs;
             public string Agents;
             public string Names;
@@ -317,181 +318,52 @@ namespace Valorant_Tracker
             public List<PlayerScore> playerScores { get; set; }
         }
 
+        public class NameServicePlayer
+        {
+            public string DisplayName { get; set; }
+            public string Subject { get; set; }
+            public string GameName { get; set; }
+            public string TagLine { get; set; }
+        }
+
         public static MatchDetails Get(Auth au, string MatchID)
         {
             MatchDetails Ret = new MatchDetails();
-            string URL = " https://pd." + au.Region + ".a.pvp.net/match-details/v1/matches/" + MatchID;
+
+            string URL = $"https://pd.{au.RegionShard}.a.pvp.net/match-details/v1/matches/{MatchID}";
             RestClient client = new RestClient(URL);
             client.CookieContainer = au.cookies;
-            //client.CookieContainer = new CookieContainer();
 
             RestRequest request = new RestRequest(Method.GET);
             request.AddHeader("Authorization", $"Bearer {au.AccessToken}");
             request.AddHeader("X-Riot-Entitlements-JWT", $"{au.EntitlementToken}");
 
+            request.AddHeader("X-Riot-ClientPlatform", Info.ClientPlatform);
+            request.AddHeader("X-Riot-ClientVersion", au.ClientVersion);
+
             var Response = client.Execute(request);
             string ResponseContent = Response.Content;
             Ret = JsonConvert.DeserializeObject<MatchDetails>(ResponseContent);
+
+            if (Ret == null || Ret.matchInfo == null || Ret.players == null)
+            {
+                throw new InvalidOperationException($"Failed to load match details (HTTP {(int)Response.StatusCode}). The match may be too old, or the API rejected the request.");
+            }
+
             Ret.Details = new List<_Details>();
             Ret.MatchOverview = new List<_MatchOverview>();
             _Details details = new _Details();
             _MatchOverview matchOverview = new _MatchOverview();
-            //string Server = "N/A";
-            //string MatchLength = "N/A";
-            //DateTime MatchStartTime;
-            //string Agent = "N/A";
-            //string Score = "N/A";
-            //string KDA = "N/A";
-            //string KD = "N/A";
-            //string HS = "N/A";
-            //string ADR = "N/A";
-            //int Kill = 0;
-            //string AverageCombatScore = "N/A";
 
             #region Details
 
             #region Map
-            switch (Ret.matchInfo.mapId)
-            {
-                case "/Game/Maps/Ascent/Ascent":
-                    details.Map = "Ascent";
-                    break;
-                case "/Game/Maps/Bonsai/Bonsai":
-                    details.Map = "Split";
-                    break;
-                case "/Game/Maps/Duality/Duality":
-                    details.Map = "Bind";
-                    break;
-                case "/Game/Maps/Foxtrot/Foxtrot":
-                    details.Map = "Breeze";
-                    break;
-                case "/Game/Maps/Port/Port":
-                    details.Map = "Icebox";
-                    break;
-                case "/Game/Maps/Triad/Triad":
-                    details.Map = "Haven";
-                    break;
-                case "/Game/Maps/Canyon/Canyon":
-                    details.Map = "Fracture";
-                    break;
-            }
+            var mapData = ValorantDataService.FindMapAsync(Ret.matchInfo.mapId).GetAwaiter().GetResult();
+            details.Map = mapData?.DisplayName ?? Ret.matchInfo.mapId;
             #endregion
 
             #region Server
-            switch (Ret.matchInfo.gamePodId)
-            {
-                // EU
-                case "aresriot.aws-rclusterprod-euw3-1.eu-gp-paris-1":
-                    details.Server = "Paris 1";
-                    break;
-                case "aresriot.aws-rclusterprod-euw3-1.eu-gp-paris-awsedge-1":
-                    details.Server = "Paris 2";
-                    break;
-                case "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1":
-                    details.Server = "Frankfurt 1";
-                    break;
-                case "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-awsedge-1":
-                    details.Server = "Frankfurt 2";
-                    break;
-                case "aresriot.aws-rclusterprod-euw2-1.eu-gp-london-awsedge-1":
-                    details.Server = "London";
-                    break;
-                case "aresriot.aws-rclusterprod-waw1-1.eu-gp-warsaw-1":
-                    details.Server = "Warsaw";
-                    break;
-                case "aresriot.aws-rclusterprod-eun1-1.eu-gp-stockholm-1":
-                    details.Server = "Stockholm 1";
-                    break;
-                case "aresriot.aws-rclusterprod-mad1-1.eu-gp-madrid-1":
-                    details.Server = "Madrid";
-                    break;
-                case "aresriot.mtl-riot-ist1-2.eu-gp-istanbul-1":
-                    details.Server = "Istanbul";
-                    break;
-                case "aresriot.aws-rclusterprod-mes1-1.eu-gp-bahrain-awsedge-1":
-                    details.Server = "Bahrain";
-                    break;
-                case "aresriot.aws-rclusterprod-apne1-1.eu-gp-tokyo-1":
-                    details.Server = "Tokyo";
-                    break;
-                // NA
-                case "aresriot.aws-rclusterprod-atl1-1.na-gp-atlanta-1":
-                    details.Server = "US Central (Georgia)";
-                    break;
-                case "aresriot.mtl-riot-ord2-3.na-gp-chicago-1":
-                    details.Server = "US Central (Illinois)";
-                    break;
-                case "aresriot.aws-rclusterprod-dfw1-1.na-gp-dallas-1":
-                    details.Server = "US Central (Texas)";
-                    break;
-                case "aresriot.aws-rclusterprod-use1-1.na-gp-ashburn-1":
-                    details.Server = "US East (N. Virginia 1)";
-                    break;
-                case "aresriot.aws-rclusterprod-use1-1.na-gp-ashburn-awsedge-1":
-                    details.Server = "US East (N. Virginia 2)";
-                    break;
-                case "aresriot.aws-rclusterprod-usw2-1.na-gp-oregon-1":
-                    details.Server = "US West (Oregon 1)";
-                    break;
-                case "aresriot.aws-rclusterprod-usw1-1.na-gp-norcal-1":
-                    details.Server = "US West (N. California 1)";
-                    break;
-                case "aresriot.aws-rclusterprod-usw1-1.na-gp-norcal-awsedge-1":
-                    details.Server = "US West (N. California 2)";
-                    break;
-                // AP
-                case "aresriot.aws-rclusterprod-aps1-1.ap-gp-mumbai-awsedge-1":
-                    details.Server = "Mumbai";
-                    break;
-                case "aresriot.aws-rclusterprod-apse1-1.ap-gp-singapore-1":
-                    details.Server = "Singapore 1";
-                    break;
-                case "aresriot.aws-rclusterprod-apse1-1.ap-gp-singapore-awsedge-1":
-                    details.Server = "Singapore 2";
-                    break;
-                case "aresriot.aws-rclusterprod-ape1-1.ap-gp-hongkong-1":
-                    details.Server = "Hong Kong 1";
-                    break;
-                case "aresriot.aws-rclusterprod-ape1-1.ap-gp-hongkong-awsedge-1":
-                    details.Server = "Hong Kong 2";
-                    break;
-                case "aresriot.aws-rclusterprod-apne1-1.ap-gp-tokyo-1":
-                    details.Server = "Tokyo 1";
-                    break;
-                case "aresriot.aws-rclusterprod-apne1-1.ap-gp-tokyo-awsedge-1":
-                    details.Server = "Tokyo 2";
-                    break;
-                case "aresriot.aws-rclusterprod-apse2-1.ap-gp-sydney-1":
-                    details.Server = "Sydney 1";
-                    break;
-                case "aresriot.aws-rclusterprod-apse2-1.ap-gp-sydney-awsedge-1":
-                    details.Server = "Sydney 2";
-                    break;
-                // KR
-                case "aresriot.aws-rclusterprod-apne2-1.kr-gp-seoul-1":
-                    details.Server = "Seoul 1";
-                    break;
-                case "aresriot.aws-rclusterprod-apne2-1.kr-gp-seoul-awsedge-1":
-                    details.Server = "Seoul 2";
-                    break;
-                // LATAM
-                case "aresriot.mtl-ctl-scl2-2.latam-gp-santiago-1":
-                    details.Server = "Santiago";
-                    break;
-                case "aresriot.mtl-tmx-mex1-1.latam-gp-mexicocity-1":
-                    details.Server = "Mexico City";
-                    break;
-                case "aresriot.mia1.latam-gp-miami-1":
-                    details.Server = "Miami";
-                    break;
-                // BR
-                case "aresriot.aws-rclusterprod-sae1-1.br-gp-saopaulo-1":
-                    details.Server = "Sao Paulo 1";
-                    break;
-                case "aresriot.aws-rclusterprod-sae1-1.br-gp-saopaulo-awsedge-1":
-                    details.Server = "Sao Paulo 2";
-                    break;
-            }
+            details.Server = GetServerName(Ret.matchInfo.gamePodId);
             #endregion
 
             #region Agent
@@ -696,7 +568,16 @@ namespace Valorant_Tracker
 
             #endregion
 
-            var Players = Ret.players.OrderByDescending(x => x.stats.score).ToList<Player>();
+            string userTeam = Ret.players.FirstOrDefault(p => p.subject == au.Subject)?.teamId ?? "Blue";
+
+            var puuids = Ret.players.Select(p => p.subject).Where(s => !string.IsNullOrEmpty(s)).ToList();
+            var realNames = GetPlayerNames(au, puuids);
+
+            var Players = Ret.players
+                .OrderBy(x => x.teamId == userTeam ? 0 : 1)
+                .ThenByDescending(x => x.stats.score)
+                .ToList<Player>();
+
             foreach (var Player in Players)
             {
                 roundsPlayed = 0;
@@ -704,9 +585,26 @@ namespace Valorant_Tracker
                 TotalHits = 0;
                 _HSs = 0;
                 matchOverview = new _MatchOverview();
+                matchOverview.Team = Player.teamId;
                 matchOverview.IDs = Player.subject;
                 matchOverview.Agents = ConvertToAgent(Player.characterId);
-                matchOverview.Names = Player.gameName + "#" + Player.tagLine;
+                string pName = Player.gameName;
+                string pTag = Player.tagLine;
+
+                if (realNames.TryGetValue(Player.subject, out var ns) && !string.IsNullOrWhiteSpace(ns.gameName))
+                {
+                    matchOverview.Names = $"{ns.gameName}#{ns.tagLine}";
+                }
+                else if (Player.subject == au.Subject)
+                {
+                    // You can always see your own name in the client, even if the API hides it
+                    matchOverview.Names = "You";
+                }
+                else
+                {
+                    // Fallback: show the first 8 chars of the PUUID so players are at least distinguishable
+                    matchOverview.Names = $"Player ({Player.subject.Substring(0, 8)})";
+                }
                 matchOverview.AverageCombatScores = (decimal)Player.stats.score / Player.stats.roundsPlayed;
                 matchOverview.AverageCombatScores = Math.Round(matchOverview.AverageCombatScores);
                 matchOverview.KDAs = Player.stats.kills + "/" + Player.stats.deaths + "/" + Player.stats.assists;
@@ -819,18 +717,67 @@ namespace Valorant_Tracker
             return Ret;
         }
 
-        public static string ConvertToAgent (string AgentID)
+        public static string ConvertToAgent(string AgentID)
         {
-            string Agent = "N/A";
-            string[,] Agents = new string[,] { { "Breach", "5f8d3a7f-467b-97f3-062c-13acf203c006" }, { "Raze", "f94c3b30-42be-e959-889c-5aa313dba261" }, { "KAY/O", "601dbbe7-43ce-be57-2a40-4abd24953621" }, { "Skye", "6f2a04ca-43e0-be17-7f36-b3908627744d" }, { "Cypher", "117ed9e3-49f3-6512-3ccf-0cada7e3823b" }, { "Sova", "ded3520f-4264-bfed-162d-b080e2abccf9" }, { "Killjoy", "1e58de9c-4950-5125-93e9-a0aee9f98746" }, { "Viper", "707eab51-4836-f488-046a-cda6bf494859" }, { "Phoenix", "eb93336a-449b-9c1b-0a54-a891f7921d69" }, { "Astra", "41fb69c1-4189-7b37-f117-bcaf1e96f1bf" }, { "Brimstone", "9f0d8ba9-4140-b941-57d3-a7ad57c6b417" }, { "Yoru", "7f94d92c-4234-0a36-9646-3a87eb8b5c89" }, { "Sage", "569fdd95-4d10-43ab-ca70-79becc718b46" }, { "Reyna", "a3bfb853-43b2-7238-a4f1-ad90e9e46bcc" }, { "Omen", "8e253930-4c05-31dd-1b6c-968525494517" }, { "Jett", "add6443a-41bd-e414-f6ad-e58d267f4e95" }, { "Chamber", "22697a3d-45bf-8dd7-4fec-84a9e28c69d7" }, { "Neon", "bb2a4828-46eb-8cd1-e765-15848195d751" }, { "Fade", "dade69b4-4f5a-8528-247b-219e5a1facd6" } };
-            for (int i = 0; i < 19; i++)
+            if (string.IsNullOrEmpty(AgentID)) return "N/A";
+
+            var agent = ValorantDataService.FindAgentAsync(AgentID).GetAwaiter().GetResult();
+            return agent?.DisplayName ?? "N/A";
+        }
+
+        private static string GetServerName(string gamePodId)
+        {
+            if (string.IsNullOrEmpty(gamePodId)) return "N/A";
+            var match = Regex.Match(gamePodId, @"-gp-([a-zA-Z]+)(?:-|$)");
+            if (match.Success)
             {
-                if (string.Equals(Agents[i, 1], AgentID, StringComparison.CurrentCultureIgnoreCase))
+                string city = match.Groups[1].Value;
+                return char.ToUpper(city[0]) + city.Substring(1);
+            }
+
+            return gamePodId;
+        }
+
+        public static Dictionary<string, (string gameName, string tagLine)> GetPlayerNames(Auth au, List<string> puuids)
+        {
+            var names = new Dictionary<string, (string, string)>();
+            if (puuids == null || puuids.Count == 0) return names;
+
+            // Use v2, not v1
+            string url = $"https://pd.{au.RegionShard}.a.pvp.net/name-service/v2/players";
+            var client = new RestClient(url);
+            client.CookieContainer = au.cookies;
+
+            var request = new RestRequest(Method.PUT);
+            request.AddHeader("Authorization", $"Bearer {au.AccessToken}");
+            request.AddHeader("X-Riot-Entitlements-JWT", au.EntitlementToken);
+            request.AddHeader("X-Riot-ClientPlatform", Info.ClientPlatform);
+            request.AddHeader("X-Riot-ClientVersion", au.ClientVersion);
+
+            request.AddJsonBody(puuids); // Body is a JSON array of PUUID strings
+
+            var response = client.Execute(request);
+
+            if (response.IsSuccessful && !string.IsNullOrEmpty(response.Content))
+            {
+                var result = JsonConvert.DeserializeObject<List<NameServicePlayer>>(response.Content);
+                if (result != null)
                 {
-                    Agent = Agents[i, 0];
+                    foreach (var p in result)
+                    {
+                        if (!string.IsNullOrEmpty(p.Subject) && !string.IsNullOrEmpty(p.GameName))
+                        {
+                            names[p.Subject] = (p.GameName, p.TagLine);
+                        }
+                    }
                 }
             }
-            return Agent;
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"[NameService] v2 failed: {(int)response.StatusCode} - {response.Content}");
+            }
+
+            return names;
         }
 
     }
