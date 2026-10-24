@@ -15,8 +15,31 @@ namespace Valorant_Tracker
         private readonly Auth _session;
         private List<ValorantSeason> _acts;
         private bool _populatingActs;
-
         private Dictionary<string, MatchDetails> _matchDetailsCache = new Dictionary<string, MatchDetails>();
+
+        private static readonly Dictionary<string, Image> RankImages = new Dictionary<string, Image>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "Unranked", Valorant_Tracker.Properties.Resources.Unranked },
+            { "Bronze 1", Valorant_Tracker.Properties.Resources.Bronze_1 },
+            { "Bronze 2", Valorant_Tracker.Properties.Resources.Bronze_2 },
+            { "Bronze 3", Valorant_Tracker.Properties.Resources.Bronze_3 },
+            { "Silver 1", Valorant_Tracker.Properties.Resources.Silver_1 },
+            { "Silver 2", Valorant_Tracker.Properties.Resources.Silver_2 },
+            { "Silver 3", Valorant_Tracker.Properties.Resources.Silver_3 },
+            { "Gold 1", Valorant_Tracker.Properties.Resources.Gold_1 },
+            { "Gold 2", Valorant_Tracker.Properties.Resources.Gold_2 },
+            { "Gold 3", Valorant_Tracker.Properties.Resources.Gold_3 },
+            { "Platinum 1", Valorant_Tracker.Properties.Resources.Platinum_1 },
+            { "Platinum 2", Valorant_Tracker.Properties.Resources.Platinum_2 },
+            { "Platinum 3", Valorant_Tracker.Properties.Resources.Platinum_3 },
+            { "Diamond 1", Valorant_Tracker.Properties.Resources.Diamond_1 },
+            { "Diamond 2", Valorant_Tracker.Properties.Resources.Diamond_2 },
+            { "Diamond 3", Valorant_Tracker.Properties.Resources.Diamond_3 },
+            { "Immortal 1", Valorant_Tracker.Properties.Resources.Immortal_1 },
+            { "Immortal 2", Valorant_Tracker.Properties.Resources.Immortal_2 },
+            { "Immortal 3", Valorant_Tracker.Properties.Resources.Immortal_3 },
+            { "Radiant", Valorant_Tracker.Properties.Resources.Radiant }
+        };
 
         public frmMain(Auth session)
         {
@@ -28,9 +51,9 @@ namespace Valorant_Tracker
         {
             try
             {
-                var accountTask = Task.Run(() => PlayerAccountDetails.GetDetails(_session));
-                var balanceTask = Task.Run(() => Balances.GetBalance(_session));
-                var xpTask = Task.Run(() => AccountXP.GetDetails(_session));
+                var accountTask = PlayerAccountDetails.GetDetailsAsync(_session);
+                var balanceTask = Balances.GetBalanceAsync(_session);
+                var xpTask = AccountXP.GetDetailsAsync(_session);
                 var actsTask = ValorantDataService.GetActsAsync();
                 var currentActTask = ValorantDataService.GetCurrentActAsync();
                 await Task.WhenAll(accountTask, balanceTask, xpTask, actsTask, currentActTask);
@@ -49,7 +72,9 @@ namespace Valorant_Tracker
                 var store = await Task.Run(() => Store.GetOffers(_session));
                 using var api = new ValorantApiClient(_session.ToRiotSession());
 
-                var imageTasks = Enumerable.Range(0, 4)
+                // PHASE 3: Use dynamic length instead of hardcoded 4
+                int offerCount = store.FormattedSkinsPanelLayout.GetLength(0);
+                var imageTasks = Enumerable.Range(0, offerCount)
                     .Select(i =>
                     {
                         var url = store.FormattedSkinsPanelLayout[i, 1];
@@ -61,15 +86,18 @@ namespace Valorant_Tracker
 
                 var bytes = await Task.WhenAll(imageTasks);
 
-                SetBackground(pbWeapon1, bytes[0]);
-                SetBackground(pbWeapon2, bytes[1]);
-                SetBackground(pbWeapon3, bytes[2]);
-                SetBackground(pbWeapon4, bytes[3]);
+                // Safely assign images (handles cases where Riot returns fewer than 4)
+                if (bytes.Length > 0) SetBackground(pbWeapon1, bytes[0]);
+                if (bytes.Length > 1) SetBackground(pbWeapon2, bytes[1]);
+                if (bytes.Length > 2) SetBackground(pbWeapon3, bytes[2]);
+                if (bytes.Length > 3) SetBackground(pbWeapon4, bytes[3]);
 
-                lblWeaponName1.Text = store.FormattedSkinsPanelLayout[0, 0] ?? "";
-                lblWeaponName2.Text = store.FormattedSkinsPanelLayout[1, 0] ?? "";
-                lblWeaponName3.Text = store.FormattedSkinsPanelLayout[2, 0] ?? "";
-                lblWeaponName4.Text = store.FormattedSkinsPanelLayout[3, 0] ?? "";
+                // Safely assign names
+                if (offerCount > 0) lblWeaponName1.Text = store.FormattedSkinsPanelLayout[0, 0] ?? "";
+                if (offerCount > 1) lblWeaponName2.Text = store.FormattedSkinsPanelLayout[1, 0] ?? "";
+                if (offerCount > 2) lblWeaponName3.Text = store.FormattedSkinsPanelLayout[2, 0] ?? "";
+                if (offerCount > 3) lblWeaponName4.Text = store.FormattedSkinsPanelLayout[3, 0] ?? "";
+
                 lblTimeRemaining.Text = "Offers | " + store.SkinsPanelLayout.FormattedSingleItemOffersRemainingDuration;
 
                 _acts = new List<ValorantSeason>(await actsTask);
@@ -134,29 +162,17 @@ namespace Valorant_Tracker
             try
             {
                 Rank r = await Task.Run(() => Rank.GetDetails(_session, "competitive", seasonId));
-                switch (r.RankFormatted)
+
+                // PHASE 3: Dictionary Lookup instead of 25-case switch
+                if (!string.IsNullOrEmpty(r.RankFormatted) && RankImages.TryGetValue(r.RankFormatted, out var rankImage))
                 {
-                    case "Unranked": pbRank.Image = Valorant_Tracker.Properties.Resources.Unranked; break;
-                    case "Bronze 1": pbRank.Image = Valorant_Tracker.Properties.Resources.Bronze_1; break;
-                    case "Bronze 2": pbRank.Image = Valorant_Tracker.Properties.Resources.Bronze_2; break;
-                    case "Bronze 3": pbRank.Image = Valorant_Tracker.Properties.Resources.Bronze_3; break;
-                    case "Silver 1": pbRank.Image = Valorant_Tracker.Properties.Resources.Silver_1; break;
-                    case "Silver 2": pbRank.Image = Valorant_Tracker.Properties.Resources.Silver_2; break;
-                    case "Silver 3": pbRank.Image = Valorant_Tracker.Properties.Resources.Silver_3; break;
-                    case "Gold 1": pbRank.Image = Valorant_Tracker.Properties.Resources.Gold_1; break;
-                    case "Gold 2": pbRank.Image = Valorant_Tracker.Properties.Resources.Gold_2; break;
-                    case "Gold 3": pbRank.Image = Valorant_Tracker.Properties.Resources.Gold_3; break;
-                    case "Platinum 1": pbRank.Image = Valorant_Tracker.Properties.Resources.Platinum_1; break;
-                    case "Platinum 2": pbRank.Image = Valorant_Tracker.Properties.Resources.Platinum_2; break;
-                    case "Platinum 3": pbRank.Image = Valorant_Tracker.Properties.Resources.Platinum_3; break;
-                    case "Diamond 1": pbRank.Image = Valorant_Tracker.Properties.Resources.Diamond_1; break;
-                    case "Diamond 2": pbRank.Image = Valorant_Tracker.Properties.Resources.Diamond_2; break;
-                    case "Diamond 3": pbRank.Image = Valorant_Tracker.Properties.Resources.Diamond_3; break;
-                    case "Immortal 1": pbRank.Image = Valorant_Tracker.Properties.Resources.Immortal_1; break;
-                    case "Immortal 2": pbRank.Image = Valorant_Tracker.Properties.Resources.Immortal_2; break;
-                    case "Immortal 3": pbRank.Image = Valorant_Tracker.Properties.Resources.Immortal_3; break;
-                    case "Radiant": pbRank.Image = Valorant_Tracker.Properties.Resources.Radiant; break;
+                    pbRank.Image = rankImage;
                 }
+                else
+                {
+                    pbRank.Image = RankImages["Unranked"]; // Safe fallback
+                }
+
                 lblRank.Text = r.RankFormatted;
                 lblRankedRating.Text = r.RankedRating.ToString() + " RR";
                 lblWinsAndLosses.Text = r.NumberOfWins.ToString() + "W " + r.NumberOfLoses + "L  " + r.WinRatio;
@@ -178,7 +194,8 @@ namespace Valorant_Tracker
                 case 3: gameMode = GameMode.Deathmatch; break;
                 case 4: gameMode = GameMode.Replication; break;
                 case 5: gameMode = GameMode.Snowball_Fight; break;
-                case 6: gameMode = GameMode.Custom; break;
+                case 6: gameMode = GameMode.Escalation; break; // Added missing mode
+                case 7: gameMode = GameMode.Custom; break;
             }
 
             try

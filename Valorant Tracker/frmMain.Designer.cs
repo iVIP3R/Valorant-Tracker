@@ -163,7 +163,7 @@
             cmbGamemode.FormattingEnabled = true;
             cmbGamemode.IsDerivedStyle = true;
             cmbGamemode.ItemHeight = 20;
-            cmbGamemode.Items.AddRange(new object[] { "Unrated", "Competitive", "Spike rush", "Deathmatch", "Replication", "Snowball fight", "Custom" });
+            cmbGamemode.Items.AddRange(new object[] { "Unrated", "Competitive", "Spike rush", "Deathmatch", "Replication", "Snowball fight", "Escalation", "Custom" });
             cmbGamemode.Location = new System.Drawing.Point(3, 60);
             cmbGamemode.Name = "cmbGamemode";
             cmbGamemode.SelectedItemBackColor = System.Drawing.Color.FromArgb(65, 177, 225);

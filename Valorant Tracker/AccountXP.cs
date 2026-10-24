@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using RestSharp;
 
 namespace Valorant_Tracker
@@ -50,23 +50,22 @@ namespace Valorant_Tracker
         public string LastTimeGrantedFirstWin { get; set; }
         public string NextTimeFirstWinAvailable { get; set; }
         public int StatusCode;
-
-        public static AccountXP GetDetails(Auth au)
+        public static async Task<AccountXP> GetDetailsAsync(Auth au)
         {
-            AccountXP ret = new AccountXP();
-            RestClient client = new RestClient("https://pd." + au.Region + ".a.pvp.net/account-xp/v1/players/" + au.Subject);
-            RestRequest request = new RestRequest(Method.GET);
+            var client = new RestClient($"https://pd.{au.RegionShard}.a.pvp.net/account-xp/v1/players/{au.Subject}");
+            var request = new RestRequest(Method.GET);
             request.AddHeader("Authorization", $"Bearer {au.AccessToken}");
-            request.AddHeader("X-Riot-Entitlements-JWT", $"{au.EntitlementToken}");
-            request.AddHeader("X-Riot-ClientPlatform", $"ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9");
-            request.AddHeader("X-Riot-ClientVersion", $"{au.ClientVersion}");
-            var Response = client.Execute(request);
-            string ResponseContent = Response.Content;
-            JObject obj = JObject.FromObject(JsonConvert.DeserializeObject(ResponseContent));
-            ret = JsonConvert.DeserializeObject<AccountXP>(ResponseContent);
-            ret.StatusCode = (int)Response.StatusCode;
-            return ret;
-        }
+            request.AddHeader("X-Riot-Entitlements-JWT", au.EntitlementToken);
+            request.AddHeader("X-Riot-ClientPlatform", Info.ClientPlatform);
+            request.AddHeader("X-Riot-ClientVersion", au.ClientVersion);
 
+            var response = await client.ExecuteAsync(request);
+            var ret = JsonConvert.DeserializeObject<AccountXP>(response.Content);
+
+            if (ret != null)
+                ret.StatusCode = (int)response.StatusCode;
+
+            return ret ?? new AccountXP();
+        }
     }
 }
