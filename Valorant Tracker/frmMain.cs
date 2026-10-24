@@ -72,7 +72,6 @@ namespace Valorant_Tracker
                 var store = await Task.Run(() => Store.GetOffers(_session));
                 using var api = new ValorantApiClient(_session.ToRiotSession());
 
-                // PHASE 3: Use dynamic length instead of hardcoded 4
                 int offerCount = store.FormattedSkinsPanelLayout.GetLength(0);
                 var imageTasks = Enumerable.Range(0, offerCount)
                     .Select(i =>
@@ -86,13 +85,11 @@ namespace Valorant_Tracker
 
                 var bytes = await Task.WhenAll(imageTasks);
 
-                // Safely assign images (handles cases where Riot returns fewer than 4)
                 if (bytes.Length > 0) SetBackground(pbWeapon1, bytes[0]);
                 if (bytes.Length > 1) SetBackground(pbWeapon2, bytes[1]);
                 if (bytes.Length > 2) SetBackground(pbWeapon3, bytes[2]);
                 if (bytes.Length > 3) SetBackground(pbWeapon4, bytes[3]);
 
-                // Safely assign names
                 if (offerCount > 0) lblWeaponName1.Text = store.FormattedSkinsPanelLayout[0, 0] ?? "";
                 if (offerCount > 1) lblWeaponName2.Text = store.FormattedSkinsPanelLayout[1, 0] ?? "";
                 if (offerCount > 2) lblWeaponName3.Text = store.FormattedSkinsPanelLayout[2, 0] ?? "";
@@ -163,14 +160,13 @@ namespace Valorant_Tracker
             {
                 Rank r = await Task.Run(() => Rank.GetDetails(_session, "competitive", seasonId));
 
-                // PHASE 3: Dictionary Lookup instead of 25-case switch
                 if (!string.IsNullOrEmpty(r.RankFormatted) && RankImages.TryGetValue(r.RankFormatted, out var rankImage))
                 {
                     pbRank.Image = rankImage;
                 }
                 else
                 {
-                    pbRank.Image = RankImages["Unranked"]; // Safe fallback
+                    pbRank.Image = RankImages["Unranked"];
                 }
 
                 lblRank.Text = r.RankFormatted;
@@ -194,7 +190,7 @@ namespace Valorant_Tracker
                 case 3: gameMode = GameMode.Deathmatch; break;
                 case 4: gameMode = GameMode.Replication; break;
                 case 5: gameMode = GameMode.Snowball_Fight; break;
-                case 6: gameMode = GameMode.Escalation; break; // Added missing mode
+                case 6: gameMode = GameMode.Escalation; break;
                 case 7: gameMode = GameMode.Custom; break;
             }
 

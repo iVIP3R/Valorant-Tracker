@@ -1,7 +1,10 @@
-refactor: complete Phase 3 (async API, dynamic store, rank dictionary)
+v0.4 - Core Functionality Complete
 
-- Refactored PlayerAccountDetails, Balances, and AccountXP to use native async/await (ExecuteAsync/SendAsync) instead of blocking Task.Run calls.
-- Replaced the 25-case switch statement for rank images with a fast, case-insensitive Dictionary lookup and a safe fallback.
-- Fixed a bug where AccountXP and Balances were using the uppercase region code, causing API failures in certain regions.
-- Removed hardcoded store limits to support dynamic offer counts, preventing IndexOutOfRange exceptions.
-- Added the missing Escalation game mode to the match history dropdown.
+This milestone marks the completion of Phases 3 and 4. The application is now fully async, dynamically fetches game data, and handles match history with high performance.
+
+Highlights:
+- Async Refactor: Player details, balances, and XP now use native async/await, eliminating blocked threads.
+- Rank Dictionary: Replaced a 75-line switch statement with a fast, case-insensitive dictionary lookup.
+- Smart Match History: Implemented progressive background loading for match details, coupled with an in-memory cache.
+- Instant Details: Clicking a match row now opens the detailed scoreboard instantly (0ms delay) by passing the cached object directly to the form.
+- API Fixes: Fixed uppercase region codes in Balances and AccountXP that were causing silent failures.
