@@ -1,7 +1,11 @@
-﻿using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -10,62 +14,87 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using RestSharp;
 
 namespace Valorant_Tracker
 {
     public partial class frmMain : MetroSet_UI.Forms.MetroSetForm
     {
-        public frmMain()
+        private readonly Auth _session;
+
+        public frmMain(Auth session)
         {
+            _session = session ?? throw new ArgumentNullException(nameof(session));
             InitializeComponent();
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
+        private async void frmMain_Load(object sender, EventArgs e)
         {
-            PlayerAccountDetails P = PlayerAccountDetails.GetDetails(frmLogin.au);
-            Balances B = Balances.GetBalance(frmLogin.au);
-            AccountXP A = AccountXP.GetDetails(frmLogin.au);
-            lblGameName.Text = "Game name : " + P.GameName;
-            lblTagline.Text = "Tagline : " + P.TagLine;
-            lblRegion.Text = "Region : " + P.AccountRegion;
-            lblLevel.Text = "Level : " + A.Progress.Level.ToString();
-            lblValorantPoints.Text = "Valorant points : " + B.ValorantPoints.ToString();
-            lblRadianitePoints.Text = "Radianite points : " + B.RadianitePoints.ToString();
-            lblCreatedAt.Text = "Created at : " + P.CreatedAt.ToString();
+            try
+            {
+                var accountTask = Task.Run(() => PlayerAccountDetails.GetDetails(_session));
+                var balanceTask = Task.Run(() => Balances.GetBalance(_session));
+                var xpTask = Task.Run(() => AccountXP.GetDetails(_session));
+                await Task.WhenAll(accountTask, balanceTask, xpTask);
 
-            Store s = Store.GetOffers(frmLogin.au);
-            WebClient wc = new WebClient();
-            byte[] bytes1 = wc.DownloadData(s.FormattedSkinsPanelLayout[0, 1]);
-            byte[] bytes2 = wc.DownloadData(s.FormattedSkinsPanelLayout[1, 1]);
-            byte[] bytes3 = wc.DownloadData(s.FormattedSkinsPanelLayout[2, 1]);
-            byte[] bytes4 = wc.DownloadData(s.FormattedSkinsPanelLayout[3, 1]);
-            MemoryStream ms1 = new MemoryStream(bytes1);
-            MemoryStream ms2 = new MemoryStream(bytes2);
-            MemoryStream ms3 = new MemoryStream(bytes3);
-            MemoryStream ms4 = new MemoryStream(bytes4);
-            System.Drawing.Image img1 = System.Drawing.Image.FromStream(ms1);
-            System.Drawing.Image img2 = System.Drawing.Image.FromStream(ms2);
-            System.Drawing.Image img3 = System.Drawing.Image.FromStream(ms3);
-            System.Drawing.Image img4 = System.Drawing.Image.FromStream(ms4);
-            pbWeapon1.BackgroundImage = img1;
-            pbWeapon2.BackgroundImage = img2;
-            pbWeapon3.BackgroundImage = img3;
-            pbWeapon4.BackgroundImage = img4;
-            lblWeaponName1.Text = s.FormattedSkinsPanelLayout[0, 0];
-            lblWeaponName2.Text = s.FormattedSkinsPanelLayout[1, 0];
-            lblWeaponName3.Text = s.FormattedSkinsPanelLayout[2, 0];
-            lblWeaponName4.Text = s.FormattedSkinsPanelLayout[3, 0];
-            //lblWeaponPrice1.Text = s.FormattedSkinsPanelLayout[0, 3] + " VP";
-            //lblWeaponPrice2.Text = s.FormattedSkinsPanelLayout[1, 3] + " VP";
-            //lblWeaponPrice3.Text = s.FormattedSkinsPanelLayout[2, 3] + " VP";
-            //lblWeaponPrice4.Text = s.FormattedSkinsPanelLayout[3, 3] + " VP";
-            lblTimeRemaining.Text = "Offers | " + s.SkinsPanelLayout.FormattedSingleItemOffersRemainingDuration;
+                var P = await accountTask;
+                var B = await balanceTask;
+                var A = await xpTask;
+                lblGameName.Text = "Game name : " + P.GameName;
+                lblTagline.Text = "Tagline : " + P.TagLine;
+                lblRegion.Text = "Region : " + P.AccountRegion;
+                lblLevel.Text = "Level : " + A.Progress.Level;
+                lblValorantPoints.Text = "Valorant points : " + B.ValorantPoints;
+                lblRadianitePoints.Text = "Radianite points : " + B.RadianitePoints;
+                lblCreatedAt.Text = "Created at : " + P.CreatedAt;
+
+                var store = await Task.Run(() => Store.GetOffers(_session));
+                using var api = new ValorantApiClient(_session.ToRiotSession());
+
+                var imageTasks = Enumerable.Range(0, 4)
+                    .Select(i =>
+                    {
+                        var url = store.FormattedSkinsPanelLayout[i, 1];
+                        return string.IsNullOrWhiteSpace(url)
+                            ? Task.FromResult<byte[]>(null)
+                            : api.GetBytesAsync(url);
+                    })
+                    .ToArray();
+
+                var bytes = await Task.WhenAll(imageTasks);
+
+                SetBackground(pbWeapon1, bytes[0]);
+                SetBackground(pbWeapon2, bytes[1]);
+                SetBackground(pbWeapon3, bytes[2]);
+                SetBackground(pbWeapon4, bytes[3]);
+
+                lblWeaponName1.Text = store.FormattedSkinsPanelLayout[0, 0] ?? "";
+                lblWeaponName2.Text = store.FormattedSkinsPanelLayout[1, 0] ?? "";
+                lblWeaponName3.Text = store.FormattedSkinsPanelLayout[2, 0] ?? "";
+                lblWeaponName4.Text = store.FormattedSkinsPanelLayout[3, 0] ?? "";
+                lblTimeRemaining.Text = "Offers | " + store.SkinsPanelLayout.FormattedSingleItemOffersRemainingDuration;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to load account data. " + ex.Message, "Load failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void cmbAct_SelectedIndexChanged(object sender, EventArgs e)
+        private static void SetBackground(PictureBox pb, byte[] bytes)
+        {
+            pb.BackgroundImage = null;
+            if (bytes == null || bytes.Length == 0) return;
+            try { pb.BackgroundImage = ToImage(bytes); }
+            catch (Exception ex) { Debug.WriteLine($"[frmMain] ToImage failed: {ex.Message}"); }
+        }
+
+        private static Image ToImage(byte[] bytes)
+        {
+            using var stream = new MemoryStream(bytes);
+            using var image = Image.FromStream(stream);
+            return new Bitmap(image);
+        }
+
+        private async void cmbAct_SelectedIndexChanged(object sender, EventArgs e)
         {
             string SeasonID = "N/A";
             switch (cmbAct.SelectedIndex)
@@ -97,8 +126,11 @@ namespace Valorant_Tracker
                 case 8:
                     SeasonID = Seasons.Episode3_Act2;
                     break;
+                case 9:
+                    SeasonID = Seasons.Episode26_Act5;
+                    break;
             }
-            Rank r = Rank.GetDetails(frmLogin.au, "competitive", SeasonID);
+            Rank r = await Task.Run(() => Rank.GetDetails(_session, "competitive", SeasonID));
             switch (r.RankFormatted)
             {
                 case "Unranked":
@@ -167,7 +199,7 @@ namespace Valorant_Tracker
             lblWinsAndLosses.Text = r.NumberOfWins.ToString() + "W " + r.NumberOfLoses + "L  " + r.WinRatio;
         }
 
-        private void cmbGamemode_SelectedIndexChanged(object sender, EventArgs e)
+        private async void cmbGamemode_SelectedIndexChanged(object sender, EventArgs e)
         {
             string gameMode = "N/A";
             switch (cmbGamemode.SelectedIndex)
@@ -195,7 +227,8 @@ namespace Valorant_Tracker
                     break;
             }
 
-            MatchHistory mo = MatchHistory.Get(frmLogin.au, gameMode);
+            dgvHistory.Rows.Clear();
+            MatchHistory mo = await Task.Run(() => MatchHistory.Get(_session, gameMode));
 
             switch (mo.Total)
             {
@@ -209,20 +242,21 @@ namespace Valorant_Tracker
                     break;
             }
 
-            MatchHistory m = MatchHistory.RetrieveIDs(frmLogin.au, mo.Total, gameMode);
+            MatchHistory m = await Task.Run(() => MatchHistory.RetrieveIDs(_session, mo.Total, gameMode));
             
             for (int i = 0; i < m.IDs.Count; i++)
             {
-                MatchDetails md = MatchDetails.Get(frmLogin.au, m.IDs[i]);
+                MatchDetails md = await Task.Run(() => MatchDetails.Get(_session, m.IDs[i]));
                 string[] Row = { m.IDs[i], md.Details[0].Server, md.Details[0].MatchLength, md.Details[0].MatchStartTime.ToString(), md.Details[0].Map, md.Details[0].Agent, md.Details[0].Score, md.Details[0].KDA, md.Details[0].KD, md.Details[0].HS, md.Details[0].ADR, md.Details[0].AverageCombatScore, md.Details[0].FirstBloods.ToString(), md.Details[0].Plants.ToString(), md.Details[0].Defuses.ToString() };
                 dgvHistory.Rows.Add(Row);
             }
         }
 
-        frmMatchDetails frmMatchDetails = new frmMatchDetails();
+        frmMatchDetails frmMatchDetails;
 
         private void dgvHistory_SelectionChanged(object sender, EventArgs e)
         {
+            frmMatchDetails ??= new frmMatchDetails(_session);
             frmMatchDetails.Hide();
             frmMatchDetails.loadDetails(dgvHistory[0, dgvHistory.CurrentRow.Index].Value.ToString());
             frmMatchDetails.Show();
