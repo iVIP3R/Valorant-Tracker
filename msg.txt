@@ -1,10 +1,9 @@
-v0.4 - Core Functionality Complete
+v0.5 - Resilience & Logging
 
-This milestone marks the completion of Phases 3 and 4. The application is now fully async, dynamically fetches game data, and handles match history with high performance.
+This milestone marks the completion of Phase 5. The application is now production-ready and handles unexpected failures gracefully.
 
 Highlights:
-- Async Refactor: Player details, balances, and XP now use native async/await, eliminating blocked threads.
-- Rank Dictionary: Replaced a 75-line switch statement with a fast, case-insensitive dictionary lookup.
-- Smart Match History: Implemented progressive background loading for match details, coupled with an in-memory cache.
-- Instant Details: Clicking a match row now opens the detailed scoreboard instantly (0ms delay) by passing the cached object directly to the form.
-- API Fixes: Fixed uppercase region codes in Balances and AccountXP that were causing silent failures.
+- Global Exception Handling: Added a global try/catch in Program.cs for both UI and background threads.
+- Custom Logging: Added a lightweight Logger that writes detailed stack traces to %LOCALAPPDATA%\Valorant_Tracker\logs\.
+- User-Friendly Errors: Replaced raw Windows crash dialogs with clean, actionable error messages (e.g., distinguishing between expired sessions and lost internet).
+- Zero Crashes: The app will no longer hard-crash if the network drops or Riot's API changes unexpectedly.
