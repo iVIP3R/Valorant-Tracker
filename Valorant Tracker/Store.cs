@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json;
-using RestSharp;
-using System.Windows.Forms;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Valorant_Tracker
 {
@@ -12,34 +12,29 @@ namespace Valorant_Tracker
     {
         public _FeaturedBundle FeaturedBundle { get; set; }
         public _SkinsPanelLayout SkinsPanelLayout { get; set; }
-        public _BonusStore BonusStore { get; set; }
+
+        public _UpgradeCurrencyStore UpgradeCurrencyStore { get; set; }
+        public _AccessoryStore AccessoryStore { get; set; }
+
+        public List<PluginStore> PluginStores { get; set; }
+
         public string[,] FormattedSkinsPanelLayout = new string[4, 2];
-        public _CurrentBundle CurrentBundle { get; set; }
+
         public int StatusCode;
 
-        public class _CurrentBundle
-        {
-            public List<string> Names { get; set; }
-            public List<int> Prices { get; set; }
-            public List<string> Images { get; set; }
 
-        }
+        // =========================
+        // Featured Bundle
+        // =========================
 
-        public class Item2
+        public class _FeaturedBundle
         {
-            public string ItemTypeID { get; set; }
-            public string ItemID { get; set; }
-            public int Amount { get; set; }
-        }
+            public Bundle Bundle { get; set; }
+            public List<Bundle> Bundles { get; set; }
+            public List<FeaturedTileEntry> FeaturedTileEntries { get; set; }
 
-        public class _Item
-        {
-            public _Item Item { get; set; }
-            public int BasePrice { get; set; }
-            public string CurrencyID { get; set; }
-            public float DiscountPercent { get; set; }
-            public int DiscountedPrice { get; set; }
-            public bool IsPromoItem { get; set; }
+            public int BundleRemainingDurationInSeconds { get; set; }
+            public string FormattedBundleRemainingDuration { get; set; }
         }
 
         public class Bundle
@@ -47,27 +42,75 @@ namespace Valorant_Tracker
             public string ID { get; set; }
             public string DataAssetID { get; set; }
             public string CurrencyID { get; set; }
-            public List<_Item> Items { get; set; }
+
+            public List<BundleItem> Items { get; set; }
+            public List<BundleItemOffer> ItemOffers { get; set; }
+
+            public Dictionary<string, int> TotalBaseCost { get; set; }
+            public Dictionary<string, int> TotalDiscountedCost { get; set; }
+            public float TotalDiscountPercent { get; set; }
+
+            public int DurationRemainingInSeconds { get; set; }
+            public bool WholesaleOnly { get; set; }
+            public int IsGiftable { get; set; }
         }
 
-        public class _FeaturedBundle
+        public class BundleItem
         {
-            public Bundle Bundle { get; set; }
-            public int BundleRemainingDurationInSeconds { get; set; }
-            public string FormattedBundleRemainingDuration { get; set; }
+            public Item Item { get; set; }
+
+            public int BasePrice { get; set; }
+            public string CurrencyID { get; set; }
+            public float DiscountPercent { get; set; }
+            public int DiscountedPrice { get; set; }
+            public bool IsPromoItem { get; set; }
         }
 
-        public class _SkinsPanelLayout
+        public class BundleItemOffer
         {
-            public List<string> SingleItemOffers { get; set; }
-            public int SingleItemOffersRemainingDurationInSeconds { get; set; }
-            public string FormattedSingleItemOffersRemainingDuration { get; set; }
+            public string BundleItemOfferID { get; set; }
+            public Offer Offer { get; set; }
+
+            public float DiscountPercent { get; set; }
+            public Dictionary<string, int> DiscountedCost { get; set; }
         }
 
-        public class Cost
+        public class FeaturedTileEntry
         {
-            [JsonProperty("85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741")]
-            public int _85ad13f73d1b51289eb27cd8ee0b5741 { get; set; }
+            public string Offer { get; set; }
+            public string OfferType { get; set; }
+            public string Tile { get; set; }
+            public string Text { get; set; }
+            public FeaturedTileEntryData Data { get; set; }
+        }
+
+        public class FeaturedTileEntryData
+        {
+            public string ID { get; set; }
+            public string Image { get; set; }
+        }
+
+
+        // =========================
+        // Items / Offers
+        // =========================
+
+        public class Item
+        {
+            public string ItemTypeID { get; set; }
+            public string ItemID { get; set; }
+            public int Amount { get; set; }
+        }
+
+        public class Offer
+        {
+            public string OfferID { get; set; }
+            public bool IsDirectPurchase { get; set; }
+            public DateTime StartDate { get; set; }
+
+            public Dictionary<string, int> Cost { get; set; }
+
+            public List<Reward> Rewards { get; set; }
         }
 
         public class Reward
@@ -77,75 +120,204 @@ namespace Valorant_Tracker
             public int Quantity { get; set; }
         }
 
-        public class Offer
+
+        // =========================
+        // Daily Store
+        // =========================
+
+        public class _SkinsPanelLayout
+        {
+            public List<string> SingleItemOffers { get; set; }
+
+            public List<Offer> SingleItemStoreOffers { get; set; }
+
+            public int SingleItemOffersRemainingDurationInSeconds { get; set; }
+
+            public string FormattedSingleItemOffersRemainingDuration { get; set; }
+        }
+
+
+        // =========================
+        // Upgrade Currency Store
+        // =========================
+
+        public class _UpgradeCurrencyStore
+        {
+            public List<UpgradeCurrencyOffer> UpgradeCurrencyOffers { get; set; }
+        }
+
+        public class UpgradeCurrencyOffer
         {
             public string OfferID { get; set; }
-            public bool IsDirectPurchase { get; set; }
-            public string StartDate { get; set; }
-            public Cost Cost { get; set; }
-            public List<Reward> Rewards { get; set; }
-        }
+            public string StorefrontItemID { get; set; }
 
-        public class DiscountCosts
-        {
-            [JsonProperty("85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741")]
-            public int _85ad13f73d1b51289eb27cd8ee0b5741 { get; set; }
-        }
-
-        public class BonusStoreOffer
-        {
-            public string BonusOfferID { get; set; }
             public Offer Offer { get; set; }
-            public int DiscountPercent { get; set; }
-            public DiscountCosts DiscountCosts { get; set; }
-            public bool IsSeen { get; set; }
+
+            public float DiscountedPercent { get; set; }
         }
 
-        public class _BonusStore
+
+        // =========================
+        // Accessory Store
+        // =========================
+
+        public class _AccessoryStore
         {
-            public List<BonusStoreOffer> BonusStoreOffers { get; set; }
-            public int BonusStoreRemainingDurationInSeconds { get; set; }
-            public string FormattedBonusStoreRemainingDuration { get; set; }
+            public List<AccessoryStoreOffer> AccessoryStoreOffers { get; set; }
+
+            public int AccessoryStoreRemainingDurationInSeconds { get; set; }
+
+            public string StorefrontID { get; set; }
         }
+
+        public class AccessoryStoreOffer
+        {
+            public Offer Offer { get; set; }
+
+            public string ContractID { get; set; }
+        }
+
+
+        // =========================
+        // Plugin Stores
+        // =========================
+
+        public class PluginStore
+        {
+            public string PluginID { get; set; }
+            public PluginOffers PluginOffers { get; set; }
+        }
+
+        public class PluginOffers
+        {
+            public List<PluginStoreOffer> StoreOffers { get; set; }
+        }
+
+        public class PluginStoreOffer
+        {
+            public string OfferID { get; set; }
+            public string StorefrontItemID { get; set; }
+
+            public PluginPurchaseInformation PurchaseInformation { get; set; }
+
+            public List<PluginSubOffer> SubOffers { get; set; }
+        }
+
+        public class PluginPurchaseInformation
+        {
+            public Offer Offer { get; set; }
+        }
+
+        public class PluginSubOffer
+        {
+            public string OfferID { get; set; }
+            public Dictionary<string, int> Cost { get; set; }
+        }
+
+
+        // =========================
+        // API
+        // =========================
 
         public static Store GetOffers(Auth au)
         {
-            Store Ret = new Store();
-            string URL = "https://pd." + au.Region + ".a.pvp.net/store/v2/storefront/" + au.Subject;
-            RestClient client = new RestClient(URL);
-            client.CookieContainer = au.cookies;
-            //client.CookieContainer = new CookieContainer();
+            if (au == null)
+                throw new ArgumentNullException(nameof(au));
 
-            RestRequest request = new RestRequest(Method.GET);
-            request.AddHeader("Authorization", $"Bearer {au.AccessToken}");
-            request.AddHeader("X-Riot-Entitlements-JWT", $"{au.EntitlementToken}");
-            request.AddHeader("X-Riot-ClientPlatform", $"{Info.ClientPlatform}");
-            request.AddHeader("X-Riot-ClientVersion", $"{au.ClientVersion}");
+            using var client = new ValorantApiClient(au.ToRiotSession());
 
-            var Response = client.Execute(request);
-            string ResponseContent = Response.Content;
-            Ret = JsonConvert.DeserializeObject<Store>(ResponseContent);
-            Ret.FormattedSkinsPanelLayout = FormatOffers(au, Ret.SkinsPanelLayout.SingleItemOffers);
-            Ret.SkinsPanelLayout.FormattedSingleItemOffersRemainingDuration = TimeSpan.FromSeconds(Ret.SkinsPanelLayout.SingleItemOffersRemainingDurationInSeconds).ToString(@"hh\:mm\:ss");
-            Ret.FeaturedBundle.FormattedBundleRemainingDuration = TimeSpan.FromSeconds(Ret.FeaturedBundle.BundleRemainingDurationInSeconds).ToString(@"hh\:mm\:ss");
-            if (!(Ret.BonusStore == null))
+            var emptyJsonContent = new StringContent("{}", Encoding.UTF8, "application/json");
+
+            var ret = client
+                .PostPlayerDataAsync<Store>(
+                    $"store/v3/storefront/{au.Subject}",
+                    emptyJsonContent
+                )
+                .GetAwaiter()
+                .GetResult();
+
+            if (ret == null)
+                throw new InvalidOperationException(
+                    "Riot returned an empty storefront response."
+                );
+
+            if (ret.SkinsPanelLayout?.SingleItemOffers == null ||
+                ret.SkinsPanelLayout.SingleItemOffers.Count < 4)
             {
-                Ret.BonusStore.FormattedBonusStoreRemainingDuration = TimeSpan.FromSeconds(Ret.BonusStore.BonusStoreRemainingDurationInSeconds).ToString(@"hh\:mm\:ss");
+                throw new InvalidOperationException(
+                    "Riot returned a storefront response without four daily offers."
+                );
             }
-            Ret.StatusCode = (int)Response.StatusCode;
-            return Ret;
+
+            ret.FormattedSkinsPanelLayout = FormatOffers(au, ret);
+
+            ret.SkinsPanelLayout.FormattedSingleItemOffersRemainingDuration =
+                FormatDuration(
+                    ret.SkinsPanelLayout
+                        .SingleItemOffersRemainingDurationInSeconds
+                );
+
+            if (ret.FeaturedBundle != null)
+            {
+                ret.FeaturedBundle.FormattedBundleRemainingDuration =
+                    FormatDuration(
+                        ret.FeaturedBundle
+                            .BundleRemainingDurationInSeconds
+                    );
+            }
+
+            ret.StatusCode = 200;
+
+            return ret;
         }
 
-        private static string[,] FormatOffers(Auth au, List<string> IDs)
+
+        // =========================
+        // Formatting
+        // =========================
+
+        private static string[,] FormatOffers(Auth au, Store store)
         {
-            string[,] FormattedOffers = new string[4, 2];
+            var formattedOffers = new string[4, 2];
+
+            var offers = store.SkinsPanelLayout.SingleItemStoreOffers;
+
             for (int i = 0; i < 4; i++)
             {
-                _Content c = _Content.Search(au, IDs[i]);
-                FormattedOffers[i, 0] = c.data.displayName;
-                FormattedOffers[i, 1] = c.data.displayIcon;
+                string offerId =
+                    store.SkinsPanelLayout.SingleItemOffers[i];
+
+                var offer = offers?
+                    .FirstOrDefault(x => x.OfferID == offerId);
+
+                var reward = offer?.Rewards?.FirstOrDefault();
+
+                if (reward == null)
+                    continue;
+
+                Content content = Content.Search(
+                    au,
+                    reward.ItemID
+                );
+
+                if (content?.data == null)
+                    continue;
+
+                formattedOffers[i, 0] =
+                    content.data.displayName;
+
+                formattedOffers[i, 1] =
+                    content.data.displayIcon;
             }
-            return FormattedOffers;
+
+            return formattedOffers;
+        }
+
+        private static string FormatDuration(int seconds)
+        {
+            return TimeSpan
+                .FromSeconds(seconds)
+                .ToString(@"dd\:hh\:mm\:ss");
         }
     }
 }

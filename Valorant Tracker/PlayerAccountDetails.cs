@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Newtonsoft.Json;
@@ -288,19 +288,41 @@ namespace Valorant_Tracker
 
         public static PlayerAccountDetails GetDetails (Auth au)
         {
-            PlayerAccountDetails ret = new PlayerAccountDetails();
-            RestClient Client = new RestClient(new Uri("https://auth.riotgames.com/userinfo/"));
-            RestRequest Request = new RestRequest(Method.POST);
-            Request.AddHeader("Authorization", $"Bearer {au.AccessToken}");
-            var Response = Client.Execute(Request);
-            string ResponseContent = Response.Content;
-            JObject obj = JObject.FromObject(JsonConvert.DeserializeObject(ResponseContent));
-            ret.ID = obj["sub"].Value<string>();
-            ret.AccountRegion = ConvertPlayerLocaleToCountryName(obj["country"].Value<string>().ToUpper());
-            ret.GameName = obj["acct"].Value<string>("game_name");
-            ret.TagLine = obj["acct"].Value<string>("tag_line");
-            ret.CreatedAt = UnixTimeStampToDateTime(obj["acct"].Value<double>("created_at"));
-            ret.StatusCode = (int)Response.StatusCode;
+            if (au == null) throw new ArgumentNullException(nameof(au));
+
+            var ret = new PlayerAccountDetails
+            {
+                ID = au.Subject,
+                AccountRegion = au.Region.ToString(),
+                GameName = "Signed in",
+                TagLine = String.Empty,
+                CreatedAt = DateTime.MinValue
+            };
+
+            using var client = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(20) };
+            using var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Post, "https://auth.riotgames.com/userinfo")
+            {
+                Content = new System.Net.Http.StringContent("{}", System.Text.Encoding.UTF8, "application/json")
+            };
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", au.AccessToken);
+            using var response = client.Send(request);
+            ret.StatusCode = (int)response.StatusCode;
+            var responseContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+            // Riot can return an HTML challenge/login document. It is not player JSON.
+            if (!response.IsSuccessStatusCode || String.IsNullOrWhiteSpace(responseContent) || responseContent.TrimStart()[0] != '{')
+                return ret;
+
+            var obj = JObject.Parse(responseContent);
+            ret.ID = obj.Value<string>("sub") ?? ret.ID;
+            var country = obj.Value<string>("country");
+            if (!String.IsNullOrWhiteSpace(country))
+                ret.AccountRegion = ConvertPlayerLocaleToCountryName(country.ToUpperInvariant());
+            ret.GameName = obj["acct"]?.Value<string>("game_name") ?? ret.GameName;
+            ret.TagLine = obj["acct"]?.Value<string>("tag_line") ?? ret.TagLine;
+            var createdAt = obj["acct"]?.Value<double?>("created_at");
+            if (createdAt.HasValue)
+                ret.CreatedAt = UnixTimeStampToDateTime(createdAt.Value);
             return ret;
         }
     }

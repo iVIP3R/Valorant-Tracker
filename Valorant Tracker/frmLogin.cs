@@ -1,77 +1,103 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
-using System.Text.RegularExpressions;
-using RestSharp;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using Microsoft.Web.WebView2.WinForms;
+using Microsoft.Web.WebView2.Core;
 
 namespace Valorant_Tracker
 {
     public partial class frmLogin : Form
     {
+        private readonly WebView2 _browser = new WebView2 { Dock = DockStyle.Fill, Visible = false };
+        private bool _handlingRedirect;
+
         public frmLogin()
         {
             InitializeComponent();
+            Controls.Add(_browser);
+            _browser.BringToFront();
+            _browser.SourceChanged += Browser_SourceChanged;
         }
 
-        string Username;
-        string Password;
-        public static Auth au { get; set; }
-
-        private void chkPassword_CheckedChanged(object sender, EventArgs e)
+        protected override async void OnLoad(EventArgs e)
         {
-            if (txtPassword.UseSystemPasswordChar == true)
+            base.OnLoad(e);
+            cmbRegions.SelectedIndex = 0;
+            txtUsername.Visible = txtPassword.Visible = chkPassword.Visible = false;
+            lblUsername.Visible = lblPassword.Visible = false;
+            btnLogin.Text = "Continue";
+            await InitializeBrowserAsync();
+        }
+
+        private async Task InitializeBrowserAsync()
+        {
+            try
             {
-                txtPassword.UseSystemPasswordChar = false;
+                await _browser.EnsureCoreWebView2Async();
             }
-            else
+            catch (Exception ex)
             {
-                txtPassword.UseSystemPasswordChar = true;
+                btnLogin.Enabled = false;
+                MessageBox.Show("Microsoft Edge WebView2 Evergreen Runtime is required to sign in. Install it and restart the app.\n\n" + ex.Message,
+                    "WebView2 unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
-        {
-            var textBoxCollection = new[] { txtUsername, txtPassword };
+        private void chkPassword_CheckedChanged(object sender, EventArgs e) { }
 
-            bool atleastOneTextboxEmpty = textBoxCollection
-                                               .Any(t => String.IsNullOrWhiteSpace(t.Text));
-            if (atleastOneTextboxEmpty == true && (string.IsNullOrEmpty(cmbRegions.Text)) || (cmbRegions.SelectedIndex == -1)) 
+        private async void btnLogin_Click(object sender, EventArgs e)
+        {
+            if (cmbRegions.SelectedIndex < 0)
             {
-                MessageBox.Show("Please enter all required fields", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Select a region before continuing.", "Region required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
-            else
+            if (_browser.CoreWebView2 == null)
             {
-                Username = txtUsername.Text.Trim();
-                Password = txtPassword.Text.Trim();
-                region reg = region.EU;
-                switch (cmbRegions.SelectedItem.ToString())
-                {
-                    case "Europe":
-                    reg = region.EU;
-                    break;
-                    case "North America":
-                    reg = region.NA;
-                    break;
-                    case "Asia Pacific":
-                    reg = region.AP;
-                    break;
-                    case "Korea":
-                    reg = region.KO;
-                    break;
-                }
-                au = Auth.Login(Username, Password, reg);
-                this.Visible = false;
-                frmMain frmMain = new frmMain();
-                frmMain.Show();
+                await InitializeBrowserAsync();
+                if (_browser.CoreWebView2 == null) return;
             }
+
+            cmbRegions.Enabled = false;
+            btnLogin.Enabled = false;
+            _browser.Visible = true;
+            _browser.BringToFront();
+            _browser.CoreWebView2.Navigate(WebViewAuthHandler.AuthorizeUrl);
+        }
+
+        private async void Browser_SourceChanged(object sender, CoreWebView2SourceChangedEventArgs e)
+        {
+            if (_handlingRedirect || !WebViewAuthHandler.TryParseRedirect(_browser.Source, out var accessToken, out var idToken, out var expiresIn)) return;
+            _handlingRedirect = true;
+            try
+            {
+                _browser.Visible = false;
+                var session = await Auth.CreateFromAccessTokenAsync(accessToken, idToken, SelectedRegion(), expiresIn);
+                var main = new frmMain(session);
+                main.FormClosed += (_, __) => Close();
+                Hide();
+                main.Show();
+            }
+            catch (Exception ex)
+            {
+                _handlingRedirect = false;
+                _browser.Visible = true;
+                btnLogin.Enabled = true;
+                cmbRegions.Enabled = true;
+                MessageBox.Show("Riot sign-in completed, but the session could not be created. Please try again.\n\n" + ex.Message,
+                    "Sign-in failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private region SelectedRegion()
+        {
+            return cmbRegions.SelectedItem?.ToString().Trim() switch
+            {
+                "North America" => region.NA,
+                "Asia Pacific" => region.AP,
+                "Korea" => region.KO,
+                _ => region.EU
+            };
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
@@ -36,14 +36,14 @@ namespace Valorant_Tracker
         public static Rank GetDetails (Auth au, string GameMode, string SeasonID)
         {
             Rank Ret = new Rank();
-            RestClient Client = new RestClient(new Uri($"https://pd.eu.a.pvp.net/mmr/v1/players/{au.Subject}"));
+            RestClient Client = new RestClient(new Uri($"https://pd.{au.Region.ToString().ToLowerInvariant()}.a.pvp.net/mmr/v1/players/{au.Subject}"));
             RestRequest Request = new RestRequest(Method.GET);
             Request.AddHeader("Authorization", $"Bearer {au.AccessToken}");
             Request.AddHeader("X-Riot-Entitlements-JWT", au.EntitlementToken);
             Request.AddHeader("X-Riot-ClientPlatform", Info.ClientPlatform);
             Request.AddHeader("X-Riot-ClientVersion", au.ClientVersion);
             var Respnse = Client.Execute(Request);
-            string ResponseContent = Client.Execute(Request).Content;
+            string ResponseContent = Respnse.Content;
             JObject obj = JObject.FromObject(JsonConvert.DeserializeObject(ResponseContent));
             //string Season = obj["LatestCompetitiveUpdate"].Value<string>("SeasonID");
             foreach (JProperty Seasons in obj["QueueSkills"][GameMode]["SeasonalInfoBySeasonID"].Value<JToken>())
