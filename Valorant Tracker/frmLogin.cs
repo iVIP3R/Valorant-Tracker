@@ -11,6 +11,12 @@ namespace Valorant_Tracker
         private readonly WebView2 _browser = new WebView2 { Dock = DockStyle.Fill, Visible = false };
         private bool _handlingRedirect;
 
+        /// <summary>
+        /// Raised once the user has completed Riot sign-in and a session has been
+        /// created. The caller (Program) is responsible for showing frmMain.
+        /// </summary>
+        public event EventHandler<Auth> Authenticated;
+
         public frmLogin()
         {
             InitializeComponent();
@@ -73,10 +79,9 @@ namespace Valorant_Tracker
             {
                 _browser.Visible = false;
                 var session = await Auth.CreateFromAccessTokenAsync(accessToken, idToken, SelectedRegion(), expiresIn);
-                var main = new frmMain(session);
-                main.FormClosed += (_, __) => Close();
                 Hide();
-                main.Show();
+                Authenticated?.Invoke(this, session);
+                BeginInvoke(new Action(Close));
             }
             catch (Exception ex)
             {
