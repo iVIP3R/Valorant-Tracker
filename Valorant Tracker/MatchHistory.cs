@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using RestSharp;
 
 namespace Valorant_Tracker
@@ -15,6 +13,7 @@ namespace Valorant_Tracker
         public int Total { get; set; }
         public List<_History> History { get; set; }
         public List<string> IDs = new List<string>();
+        public List<_History> Histories = new List<_History>();
         public int StatusCode;
 
         public class _History
@@ -26,55 +25,65 @@ namespace Valorant_Tracker
 
         public static MatchHistory Get(Auth au, string GameMode)
         {
-            MatchHistory Ret = new MatchHistory();
-            string URL = " https://pd." + au.Region + ".a.pvp.net/match-history/v1/history/" + au.Subject + "?queue=" + GameMode;
-            RestClient client = new RestClient(URL);
+            string url = $"https://pd.{au.RegionShard}.a.pvp.net/match-history/v1/history/{au.Subject}?queue={GameMode}";
+            var client = new RestClient(url);
             client.CookieContainer = au.cookies;
-            //client.CookieContainer = new CookieContainer();
 
-            RestRequest request = new RestRequest(Method.GET);
+            var request = new RestRequest(Method.GET);
             request.AddHeader("Authorization", $"Bearer {au.AccessToken}");
-            request.AddHeader("X-Riot-Entitlements-JWT", $"{au.EntitlementToken}");
-            request.AddHeader("X-Riot-ClientPlatform", $"{Info.ClientPlatform}");
+            request.AddHeader("X-Riot-Entitlements-JWT", au.EntitlementToken);
+            request.AddHeader("X-Riot-ClientPlatform", Info.ClientPlatform);
+            request.AddHeader("X-Riot-ClientVersion", au.ClientVersion);
 
-            var Response = client.Execute(request);
-            string ResponseContent = Response.Content;
-            Ret = JsonConvert.DeserializeObject<MatchHistory>(ResponseContent);  
-            Ret.StatusCode = (int)Response.StatusCode;
-            return Ret;
+            var response = client.Execute(request);
+
+            var ret = JsonConvert.DeserializeObject<MatchHistory>(response.Content) ?? new MatchHistory();
+            ret.StatusCode = (int)response.StatusCode;
+            if (ret.History == null) ret.History = new List<_History>();
+
+            return ret;
         }
 
         public static MatchHistory RetrieveIDs(Auth au, int MatchesCount, string GameMode)
         {
+            if (MatchesCount <= 0)
+                return new MatchHistory { IDs = new List<string>() };
+
             decimal Iteration = (decimal)MatchesCount / 20;
             int startIndex = 0;
             int endIndex = 20;
-            List<string> _IDs = new List<string>();
             MatchHistory Ret = new MatchHistory();
+
             for (int i = 0; i < (Math.Ceiling(Iteration)); i++)
             {
-                string URL = $"https://pd.{au.Region}.a.pvp.net/match-history/v1/history/{au.Subject}?startIndex={startIndex}&endIndex={endIndex}&queue={GameMode}";
-                RestClient client = new RestClient(URL);
+                string url = $"https://pd.{au.RegionShard}.a.pvp.net/match-history/v1/history/{au.Subject}?startIndex={startIndex}&endIndex={endIndex}&queue={GameMode}";
+                var client = new RestClient(url);
                 client.CookieContainer = au.cookies;
-                //client.CookieContainer = new CookieContainer();
 
-                RestRequest request = new RestRequest(Method.GET);
+                var request = new RestRequest(Method.GET);
                 request.AddHeader("Authorization", $"Bearer {au.AccessToken}");
-                request.AddHeader("X-Riot-Entitlements-JWT", $"{au.EntitlementToken}");
-                request.AddHeader("X-Riot-ClientPlatform", $"{Info.ClientPlatform}");
+                request.AddHeader("X-Riot-Entitlements-JWT", au.EntitlementToken);
+                request.AddHeader("X-Riot-ClientPlatform", Info.ClientPlatform);
+                request.AddHeader("X-Riot-ClientVersion", au.ClientVersion);
 
-                var Response = client.Execute(request);
-                string ResponseContent = Response.Content;
-                Ret = JsonConvert.DeserializeObject<MatchHistory>(ResponseContent);
-                Ret.StatusCode = (int)Response.StatusCode;
-                foreach (var item in Ret.History)
+                var response = client.Execute(request);
+                var page = JsonConvert.DeserializeObject<MatchHistory>(response.Content);
+
+                if (page?.History != null)
                 {
-                    _IDs.Add(item.MatchID);
+                    foreach (var item in page.History)
+                    {
+                        if (!string.IsNullOrEmpty(item.MatchID))
+                        {
+                            Ret.IDs.Add(item.MatchID);
+                            Ret.Histories.Add(item);
+                        }
+                    }
                 }
+
                 startIndex += 20;
                 endIndex += 20;
             }
-            Ret.IDs = _IDs;
             return Ret;
         }
     }

@@ -134,13 +134,26 @@ namespace Valorant_Tracker
             return null;
         }
 
-        public static async Task<ValorantMap> FindMapAsync(string assetPath)
+        public static async Task<ValorantMap> FindMapAsync(string mapId)
         {
-            if (string.IsNullOrWhiteSpace(assetPath)) return null;
+            if (string.IsNullOrWhiteSpace(mapId)) return null;
+
             var maps = await GetMapsAsync().ConfigureAwait(false);
+
+            string codename = mapId.TrimEnd('/');
+            int lastSlash = codename.LastIndexOf('/');
+            if (lastSlash >= 0)
+                codename = codename.Substring(lastSlash + 1);
+
             foreach (var m in maps)
-                if (string.Equals(m.AssetPath, assetPath, StringComparison.OrdinalIgnoreCase))
+            {
+                if (string.IsNullOrEmpty(m.AssetPath)) continue;
+
+                if (m.AssetPath.IndexOf(codename, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
                     return m;
+                }
+            }
             return null;
         }
 
